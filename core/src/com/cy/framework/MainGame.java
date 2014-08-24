@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 public class MainGame extends Game
 {
     public GameScreen gs;
+    public StartScreen startscreen;
     public OrthographicCamera camera;
     public OrthographicCamera verticalcamera;
     public BitmapFont bitmapFont;

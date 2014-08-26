@@ -80,7 +80,6 @@ public class GameWorld {
 	}
 
 	public void update1f() {
-		
 		// ¸üĞÂEnemy
 		for (Enemy temp : EnemyList)
 		{

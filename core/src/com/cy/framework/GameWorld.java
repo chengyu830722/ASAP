@@ -8,8 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
 import com.cy.asap.Hero;
@@ -78,7 +83,7 @@ public class GameWorld {
 			b2debugRenderer.render(b2world,box2dcamera.combined);
 		}
 	}
-
+    //BOX2D libgdx 都是坐下角原点。
 	public void update1f() {
 		// 更新Enemy
 		for (Enemy temp : EnemyList)
@@ -94,16 +99,19 @@ public class GameWorld {
 		//pig.update1f();
 		if(WorldFames==0)
 		{
-			Enemy a=new Enemy(0,0,50,50);
+			Enemy a=new Enemy(240,800,50,50);
 			Enemy b=new Enemy(0,400,50,50);
 			Enemy c=new Enemy(240,800,50,50);
 			EnemyList.add(a);
-			EnemyList.add(b);
-			EnemyList.add(c);
+//			EnemyList.add(b);
+//			EnemyList.add(c);
 			a.attachBox2D(b2world);
-			b.attachBox2D(b2world);
-			c.attachBox2D(b2world);
+//			b.attachBox2D(b2world);
+//			c.attachBox2D(b2world);
 		}
+		WorldFames++;
+		//b2world.step(Gdx.graphics.getDeltaTime(), 8, 3);
+		b2world.step(1.0f/GameUpdate.MAX_FPS,3, 3);
 	}
 
 	public void dispose() {

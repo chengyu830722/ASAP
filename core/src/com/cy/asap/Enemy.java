@@ -22,9 +22,11 @@ public class Enemy {
 	public float width;
 	public float height;
 	//因为贴图边缘的空白，实际的物品的碰撞体积，应该略小
-	public float factor=0.9f/GlobalVal.M2P;
+	public float factor=0.9f;
 	public float rotation;
 	private Body body;
+	//所有的ENEMY只加载一份PNG到GPU。
+	private static final Texture TEXTURE=new Texture(Gdx.files.internal("data/xigua.png"));
 	
 	public Enemy(float x,float y,float width,float height) {
 		this.x=x;
@@ -32,9 +34,8 @@ public class Enemy {
 		this.width=width;
 		this.height=height;
 		rotation=0;
-		Texture texture = new Texture(Gdx.files.internal("data/xigua.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		sprite = new Sprite(texture);
+		TEXTURE.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		sprite = new Sprite(TEXTURE);
 		sprite.setSize(width, height);
 		sprite.setOrigin(width/2, height/2);
 		sprite.setPosition(x-width/2, y-height/2);
@@ -42,27 +43,40 @@ public class Enemy {
 	}
 
 	public void render1f(SpriteBatch batch) {
+		x=getX();
+		y=getY();
+		rotation=getRotationDegrees();
+		sprite.setPosition(x-width/2, y-height/2);
+		sprite.setRotation(rotation);
 		sprite.draw(batch);
-		
 	}
 	public void update1f(SpriteBatch batch) {
 	}
 	
 	//Box2D相关函数
+	//BOX2D原点，左上。
 	public void attachBox2D(World b2world)
 	{
+		Vector2 position=new Vector2(x/GlobalVal.M2P,y/GlobalVal.M2P);
+		
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.KinematicBody;
-		bodyDef.position.set(x,y);
+		bodyDef.angularDamping = 1f;
+		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.position.set(position);
+		bodyDef.angle =rotation* MathUtils.degreesToRadians;;
 		Body body = b2world.createBody(bodyDef);
 		this.body = body;
 		
 		PolygonShape polygonShape = new PolygonShape();
-		Vector2 position=new Vector2(x*factor,y*factor);
-		polygonShape.setAsBox(width*factor/2,height*factor/2,position, rotation);
+		polygonShape.setAsBox(width*factor/2/GlobalVal.M2P,height*factor/2/GlobalVal.M2P);
+//		polygonShape.setAsBox(width*factor/2/GlobalVal.M2P,height*factor/2/GlobalVal.M2P,position, rotation);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
-		fixtureDef.friction=1;
+		fixtureDef.density = 10f;
+		//弹性
+		fixtureDef.restitution =0f;
+		//摩擦
+		fixtureDef.friction = 1f;
 		body.createFixture(fixtureDef);
 		polygonShape.dispose();
 	}
@@ -71,20 +85,17 @@ public class Enemy {
 		b2world.destroyBody(body);
 		body=null;
 	}
-	public float getBOX2DX()
-	{
-		return body.getPosition().x*GlobalVal.M2P;
-		
-		sprite.setOrigin(bounds.width/2, bounds.height/2);
-		sprite.setSize(bounds.width,bounds.height);
-		sprite.setPosition(getBox2DX()-bounds.width/2, getBox2DY()-bounds.height/2);
-		rotation = body.getAngle() * MathUtils.radiansToDegrees;
-		sprite.setRotation(rotation);
-		sprite.draw(batch);
-	}
-	public float getBOX2DY()
+	public float getX()
 	{
 		return body.getPosition().x*GlobalVal.M2P;
 	}
-	
+	public float getY()
+	{
+		return body.getPosition().y*GlobalVal.M2P;
+	}
+	public float getRotationDegrees()
+	{
+		return body.getAngle() * MathUtils.radiansToDegrees;
+	}
+
 }

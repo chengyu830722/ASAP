@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
 import com.cy.asap.Hero;
+import com.cy.asap.Rock;
 
 
 public class GameWorld {
@@ -97,17 +98,23 @@ public class GameWorld {
 		}
 		// 更新主人公
 		//pig.update1f();
-		if(WorldFames==0)
+		if(WorldFames%20==0)
 		{
-			Enemy a=new Enemy(240,800,50,50);
-			Enemy b=new Enemy(0,400,50,50);
-			Enemy c=new Enemy(240,800,50,50);
+			Enemy a=new Enemy(100,800,30,30);
+			Enemy b=new Enemy(240,800,50,50);
+			Enemy c=new Enemy(340,800,30,30);
 			EnemyList.add(a);
-//			EnemyList.add(b);
-//			EnemyList.add(c);
+			EnemyList.add(b);
+			EnemyList.add(c);
 			a.attachBox2D(b2world);
-//			b.attachBox2D(b2world);
-//			c.attachBox2D(b2world);
+			b.attachBox2D(b2world);
+			c.attachBox2D(b2world);
+			Rock rock1=new  Rock(240,100,480,20);
+			rock1.attachBox2D(b2world);
+		}
+		else
+		{
+			int x=3;
 		}
 		WorldFames++;
 		//b2world.step(Gdx.graphics.getDeltaTime(), 8, 3);

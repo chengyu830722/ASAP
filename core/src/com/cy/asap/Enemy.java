@@ -72,9 +72,9 @@ public class Enemy {
 //		polygonShape.setAsBox(width*factor/2/GlobalVal.M2P,height*factor/2/GlobalVal.M2P,position, rotation);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
-		fixtureDef.density = 10f;
+		fixtureDef.density = 1f;
 		//µ¯ÐÔ
-		fixtureDef.restitution =0f;
+		fixtureDef.restitution =0.1f;
 		//Ä¦²Á
 		fixtureDef.friction = 1f;
 		body.createFixture(fixtureDef);

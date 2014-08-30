@@ -37,8 +37,8 @@ public class MainGame extends Game
 	verticalcamera.update();
 
 	// º”‘ÿ◊÷ÃÂ
-//	bitmapFont = new BitmapFont(Gdx.files.internal("font/chn.fnt"), false);
-//	bitmapFont.setScale(0.8f);
+	bitmapFont = new BitmapFont(Gdx.files.internal("font/chn.fnt"), false);
+	bitmapFont.setScale(0.8f);
 
 	this.gs = new GameScreen(this);
 

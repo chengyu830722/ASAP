@@ -1,8 +1,10 @@
 package com.cy.framework;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,8 +38,11 @@ public class GameWorld {
 	
 	SpriteBatch batch;
 	//世界总帧数
-	int WorldFames;
+	int WorldFrames;
+	//MainGame
+	MainGame mainGame;
 	public GameWorld(MainGame mainGame) {
+		this.mainGame=mainGame;
 		BulletList=new ArrayList<Bullet>();
 		EnemyList=new ArrayList<Enemy>();
 		//初始世界摄像头
@@ -56,7 +61,9 @@ public class GameWorld {
 		//初始化BOX2D world
 		b2world = new World(new Vector2(0, -9.81f), true);
 		//初始化起始点
-		WorldFames=0;
+		WorldFrames=0;
+		Rock rock1=new  Rock(240,100,480,20);
+		rock1.attachBox2D(b2world);
 	}
 
 	public void render1f() {
@@ -82,14 +89,31 @@ public class GameWorld {
 		if (GlobalVal.DEBUG)
 		{
 			b2debugRenderer.render(b2world,box2dcamera.combined);
+			// 绘制文字
+			batch.begin();
+			
+			mainGame.bitmapFont.drawWrapped(batch, "enemy数量:"+EnemyList.size()+" BodySize"+b2world.getBodyCount(), 10, 40, 480);
+			mainGame.bitmapFont.drawWrapped(batch, "frame:"+WorldFrames, 10, 70, 300);
+			mainGame.bitmapFont.drawWrapped(batch, "fps:"+Gdx.app.getGraphics().getFramesPerSecond(), 10, 100, 300);
+			batch.end();
 		}
 	}
     //BOX2D libgdx 都是坐下角原点。
 	public void update1f() {
 		// 更新Enemy
-		for (Enemy temp : EnemyList)
+		// 1.更新子弹状态
+		for (Iterator<Enemy> it = EnemyList.iterator(); it
+			.hasNext();)
 		{
-		    temp.update1f(batch);
+			Enemy temp = it.next();
+		    if (!temp.getAlive())
+		    {
+		    	temp.detachBox2D(b2world);
+				it.remove();
+		    } else
+		    {
+		    	temp.update1f(batch);
+		    }
 		}
 		// 更新子弹
 		for (Bullet temp : BulletList)
@@ -98,7 +122,7 @@ public class GameWorld {
 		}
 		// 更新主人公
 		//pig.update1f();
-		if(WorldFames%20==0)
+		if((WorldFrames%3==0)&&(WorldFrames<600))
 		{
 			Enemy a=new Enemy(100,800,30,30);
 			Enemy b=new Enemy(240,800,50,50);
@@ -109,16 +133,16 @@ public class GameWorld {
 			a.attachBox2D(b2world);
 			b.attachBox2D(b2world);
 			c.attachBox2D(b2world);
-			Rock rock1=new  Rock(240,100,480,20);
-			rock1.attachBox2D(b2world);
 		}
 		else
 		{
 			int x=3;
 		}
-		WorldFames++;
-		//b2world.step(Gdx.graphics.getDeltaTime(), 8, 3);
-		b2world.step(1.0f/GameUpdate.MAX_FPS,3, 3);
+		WorldFrames++;
+		//约束求解器(constraint solver)：用于解决模拟中的所有约束,一次一个。
+		//单个的约束会被完美的求解,然而当我们求解一个约束的时候,我们就会稍微耽误另一个。
+		//要得到良好的解,我们需要多次迭代所有约束。所以就有必要控制迭代计算的次数以防止无限循环，推荐迭代次数为10能较好的模拟效果。
+		b2world.step(1.0f/GameUpdate.MAX_FPS,10, 10);
 	}
 
 	public void dispose() {

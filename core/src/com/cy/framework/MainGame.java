@@ -37,6 +37,7 @@ public class MainGame extends Game {
 		// 加载字体
 		bitmapFont = new BitmapFont(Gdx.files.internal("font/chn.fnt"), false);
 		bitmapFont.setScale(0.8f);
+		bitmapFont.setColor(0, 0, 0, 1);
 		this.gs = new GameScreen(this);
 
 		// 屏幕变换因子

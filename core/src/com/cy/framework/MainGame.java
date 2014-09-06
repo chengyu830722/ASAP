@@ -43,7 +43,8 @@ public class MainGame extends Game {
 		factorx = 800.0f / Gdx.graphics.getWidth();
 		factory = 480.0f / Gdx.graphics.getHeight();
 
-		setScreen(gs);
+		this.startscreen = new StartScreen(this);
+		setScreen(startscreen);
 	}
 
 	public void playmusic(String name) {

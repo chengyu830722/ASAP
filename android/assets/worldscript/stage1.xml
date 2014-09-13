@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+	<!-- debug-->
+	<node fun="BORN" param="ScoutA" px="0" py="700" direction="0"></node>
+	<node fun="WAIT" param="100"></node>
+	<node fun="BORN" param="ScoutA" px="50" py="700" direction="0"></node>
+	<node fun="WAIT" param="100"></node>
+	<node fun="BORN" param="ScoutA" px="100" py="700" direction="0"></node>
+	<node fun="WAIT" param="100"></node>
+</scene>

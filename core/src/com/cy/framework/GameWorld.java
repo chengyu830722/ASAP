@@ -21,6 +21,7 @@ import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
 import com.cy.asap.Hero;
 import com.cy.asap.Rock;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 
 public class GameWorld {
 	// 主人公
@@ -41,6 +42,9 @@ public class GameWorld {
 	// MainGame
 	MainGame mainGame;
 
+    // 世界脚本
+    MyWorldScript script;
+    
 	public GameWorld(MainGame mainGame) {
 		this.mainGame = mainGame;
 		BulletList = new ArrayList<Bullet>();
@@ -64,6 +68,10 @@ public class GameWorld {
 		WorldFrames = 0;
 		Rock rock1 = new Rock(240, 100, 480, 20);
 		rock1.attachBox2D(b2world);
+		//初始化脚本
+		script = new MyWorldScript(this);
+		//开始脚本
+		script.beginscript("stage1.xml");
 	}
 
 	public void render1f() {
@@ -102,8 +110,12 @@ public class GameWorld {
 
 	// BOX2D libgdx 都是坐下角原点。
 	public void update1f() {
+		//用户输入
 		updateUserInput();
-
+		
+		//世界脚本更新
+		script.update1f();
+		
 		// 更新Enemy
 		// 1.更新子弹状态
 		for (Iterator<Enemy> it = EnemyList.iterator(); it.hasNext();) {
@@ -163,6 +175,15 @@ public class GameWorld {
 	}
 
 	public void dispose() {
+	}
+
+	//产生敌人
+	public void born(String param, float parseFloat, float parseFloat2,
+			float parseFloat3) {
+		Enemy a = new Enemy(100, 800, 30, 30);
+		a.sprite.setColor(1, 0, 0, 1);
+		EnemyList.add(a);
+		a.attachBox2D(b2world);
 	}
 
 }

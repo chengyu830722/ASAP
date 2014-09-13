@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+	<!-- debug-->
+	<node fun="WAIT" param="10"></node>
+	<node fun="BORN" param="flysnake" px="0" py="380" direction="0"></node>
+	<node fun="BORN" param="flysnake" px="0" py="280" direction="0"></node>
+	<node fun="BORN" param="flysnake" px="0" py="180" direction="0"></node>
+	<node fun="WAIT" param="400"></node>
+	<node fun="DIALOG" param="stage1_2.xml"></node>
+	<node fun="DIALOG" param="stage1_over.xml"></node>
+</scene>

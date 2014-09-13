@@ -7,4 +7,5 @@ public class GlobalVal {
 	public static final float BOUND = 40f;
 	public static final float WIDTH = 480f;
 	public static final float HEIGHT = 800f;
+	public static final float STAGE=1;
 }

@@ -11,20 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class StartScreen implements Screen{
-	//TODO ½¨Á¢Ò»¸öStage£¬°Ñ¿Ø¼şÌí¼Óµ½StageÖĞ¡£Ğ´¸÷¿Ø¼şµÄ»Øµ÷º¯Êı¡£
+	//TODO å»ºç«‹ä¸€ä¸ªStageï¼ŒæŠŠæ§ä»¶æ·»åŠ åˆ°Stageä¸­ã€‚å†™å„æ§ä»¶çš„å›è°ƒå‡½æ•°ã€‚
 	
-	private MainGame game;  //ÓÎÏ·ÀàµÄÒıÓÃ   Ö÷ÒªÓÃÓÚÇĞ»»ÆÁÄ»
-	private Stage startStage ;  //½¨Á¢Ò»¸öÎèÌ¨ÀàÖ÷ÒªÓÃ ×°ÔØ Í¼Æ¬£¨ÑİÔ±£©
-	private Texture bgTexture ;  //±³¾°Í¼Æ¬ÎÆÀí
+	private MainGame game;  //æ¸¸æˆç±»çš„å¼•ç”¨   ä¸»è¦ç”¨äºåˆ‡æ¢å±å¹•
+	private Stage startStage ;  //å»ºç«‹ä¸€ä¸ªèˆå°ç±»ä¸»è¦ç”¨ è£…è½½ å›¾ç‰‡ï¼ˆæ¼”å‘˜ï¼‰
+	private Texture bgTexture ;  //èƒŒæ™¯å›¾ç‰‡çº¹ç†
 	
-    private Texture btn_StartGameTexture;  //ÉèÖÃ¿ªÊ¼ÓÎÏ· ÎÆÀí
-    private Image img_start; // ½øÈëÓÎÏ· Í¼Æ¬°´Å¥
+    private Texture btn_StartGameTexture;  //è®¾ç½®å¼€å§‹æ¸¸æˆ çº¹ç†
+    private Image img_start; // è¿›å…¥æ¸¸æˆ å›¾ç‰‡æŒ‰é’®
 
-    private SpriteBatch batch; //»æÖÆÀà
+    private SpriteBatch batch; //ç»˜åˆ¶ç±»
     
   
 	public StartScreen(MainGame mainGame) {
-		//¹¹Ôìº¯Êı´«ÈëGMAEÀà ¿ØÖÆScreenÇĞ»» 
+		//æ„é€ å‡½æ•°ä¼ å…¥GMAEç±» æ§åˆ¶Screenåˆ‡æ¢ 
          this.game =mainGame;
 	}
 
@@ -51,7 +51,7 @@ public class StartScreen implements Screen{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		//³õÊ¼»¯¶¼ÔÚ ÕâÀï
+		//åˆå§‹åŒ–éƒ½åœ¨ è¿™é‡Œ
 		batch= new SpriteBatch();
 		startStage = new Stage();
 	

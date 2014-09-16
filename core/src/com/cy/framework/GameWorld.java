@@ -24,81 +24,81 @@ import com.cy.asap.Rock;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
 
 public class GameWorld {
-	// Ö÷ÈË¹«
+	// ä¸»äººå…¬
 	public Hero pig;
-	// ÀÇ
+	// ç‹¼
 	public ArrayList<Bullet> BulletList;
 	public ArrayList<Enemy> EnemyList;
 	// BOX2D World
 	public World b2world;
 	public Box2DDebugRenderer b2debugRenderer;
-	// ÉãÏñÍ·
+	// æ‘„åƒå¤´
 	public OrthographicCamera camera;
 	public OrthographicCamera box2dcamera;
 
 	SpriteBatch batch;
-	// ÊÀ½ç×ÜÖ¡Êı
+	// ä¸–ç•Œæ€»å¸§æ•°
 	int WorldFrames;
 	// MainGame
 	MainGame mainGame;
 
-    // ÊÀ½ç½Å±¾
+    // ä¸–ç•Œè„šæœ¬
     MyWorldScript script;
     
 	public GameWorld(MainGame mainGame) {
 		this.mainGame = mainGame;
 		BulletList = new ArrayList<Bullet>();
 		EnemyList = new ArrayList<Enemy>();
-		// ³õÊ¼ÊÀ½çÉãÏñÍ·
+		// åˆå§‹ä¸–ç•Œæ‘„åƒå¤´
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 480, 800);
 		camera.update();
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
 
-		// ³õÊ¼»¯BOX2D DEBUG RENDER
+		// åˆå§‹åŒ–BOX2D DEBUG RENDER
 		b2debugRenderer = new Box2DDebugRenderer();
 		box2dcamera = new OrthographicCamera();
 		box2dcamera.setToOrtho(false, 480 / GlobalVal.M2P, 800 / GlobalVal.M2P);
 		box2dcamera.update();
 
-		// ³õÊ¼»¯BOX2D world
+		// åˆå§‹åŒ–BOX2D world
 		b2world = new World(new Vector2(0, -9.81f), true);
-		// ³õÊ¼»¯ÆğÊ¼µã
+		// åˆå§‹åŒ–èµ·å§‹ç‚¹
 		WorldFrames = 0;
 		Rock rock1 = new Rock(240, 100, 480, 20);
 		rock1.attachBox2D(b2world);
-		//³õÊ¼»¯½Å±¾
+		//åˆå§‹åŒ–è„šæœ¬
 		script = new MyWorldScript(this);
-		//¿ªÊ¼½Å±¾
+		//å¼€å§‹è„šæœ¬
 		script.beginscript("stage1.xml");
 	}
 
 	public void render1f() {
-		// ÇåÆÁ
+		// æ¸…å±
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
-		// »æÖÆµĞÈË
+		// ç»˜åˆ¶æ•Œäºº
 		for (Enemy temp : EnemyList) {
 			temp.render1f(batch);
 		}
-		// »æÖÆ×Óµ¯
+		// ç»˜åˆ¶å­å¼¹
 		for (Bullet temp : BulletList) {
 			temp.render1f(batch);
 		}
-		// »æÖÆhero
+		// ç»˜åˆ¶hero
 		// pig.render1f(batch);
 		batch.end();
-		// µ÷ÊÔ´úÂë
+		// è°ƒè¯•ä»£ç 
 		if (GlobalVal.DEBUG) {
 			b2debugRenderer.render(b2world, box2dcamera.combined);
-			// »æÖÆÎÄ×Ö
+			// ç»˜åˆ¶æ–‡å­—
 			batch.begin();
 			mainGame.bitmapFont.drawWrapped(
 					batch,
-					"enemyÊıÁ¿:" + EnemyList.size() + " BodySize"
+					"enemyæ•°é‡:" + EnemyList.size() + " BodySize"
 							+ b2world.getBodyCount(), 10, 40, 480);
 			mainGame.bitmapFont.drawWrapped(batch, "frame:" + WorldFrames, 10,
 					70, 300);
@@ -108,16 +108,16 @@ public class GameWorld {
 		}
 	}
 
-	// BOX2D libgdx ¶¼ÊÇ×øÏÂ½ÇÔ­µã¡£
+	// BOX2D libgdx éƒ½æ˜¯åä¸‹è§’åŸç‚¹ã€‚
 	public void update1f() {
-		//ÓÃ»§ÊäÈë
+		//ç”¨æˆ·è¾“å…¥
 		updateUserInput();
 		
-		//ÊÀ½ç½Å±¾¸üĞÂ
+		//ä¸–ç•Œè„šæœ¬æ›´æ–°
 		script.update1f();
 		
-		// ¸üĞÂEnemy
-		// 1.¸üĞÂ×Óµ¯×´Ì¬
+		// æ›´æ–°Enemy
+		// 1.æ›´æ–°å­å¼¹çŠ¶æ€
 		for (Iterator<Enemy> it = EnemyList.iterator(); it.hasNext();) {
 			Enemy temp = it.next();
 			if (!temp.getAlive()) {
@@ -127,7 +127,7 @@ public class GameWorld {
 				temp.update1f(batch);
 			}
 		}
-		// ¸üĞÂ×Óµ¯
+		// æ›´æ–°å­å¼¹
 		for (Iterator<Bullet> it = BulletList.iterator(); it.hasNext();) {
 			Bullet temp = it.next();
 			if (!temp.getAlive()) {
@@ -137,7 +137,7 @@ public class GameWorld {
 				temp.update1f(batch);
 			}
 		}
-		// ¸üĞÂÖ÷ÈË¹«
+		// æ›´æ–°ä¸»äººå…¬
 		// pig.update1f();
 		if ((WorldFrames % 10 == 0) && (WorldFrames < WorldFrames+600)) {
 			Enemy a = new Enemy(100, 800, 30, 30);
@@ -153,9 +153,9 @@ public class GameWorld {
 			int x = 3;
 		}
 		WorldFrames++;
-		// Ô¼ÊøÇó½âÆ÷(constraint solver)£ºÓÃÓÚ½â¾öÄ£ÄâÖĞµÄËùÓĞÔ¼Êø,Ò»´ÎÒ»¸ö¡£
-		// µ¥¸öµÄÔ¼Êø»á±»ÍêÃÀµÄÇó½â,È»¶øµ±ÎÒÃÇÇó½âÒ»¸öÔ¼ÊøµÄÊ±ºò,ÎÒÃÇ¾Í»áÉÔÎ¢µ¢ÎóÁíÒ»¸ö¡£
-		// ÒªµÃµ½Á¼ºÃµÄ½â,ÎÒÃÇĞèÒª¶à´Îµü´úËùÓĞÔ¼Êø¡£ËùÒÔ¾ÍÓĞ±ØÒª¿ØÖÆµü´ú¼ÆËãµÄ´ÎÊıÒÔ·ÀÖ¹ÎŞÏŞÑ­»·£¬ÍÆ¼öµü´ú´ÎÊıÎª10ÄÜ½ÏºÃµÄÄ£ÄâĞ§¹û¡£
+		// çº¦æŸæ±‚è§£å™¨(constraint solver)ï¼šç”¨äºè§£å†³æ¨¡æ‹Ÿä¸­çš„æ‰€æœ‰çº¦æŸ,ä¸€æ¬¡ä¸€ä¸ªã€‚
+		// å•ä¸ªçš„çº¦æŸä¼šè¢«å®Œç¾çš„æ±‚è§£,ç„¶è€Œå½“æˆ‘ä»¬æ±‚è§£ä¸€ä¸ªçº¦æŸçš„æ—¶å€™,æˆ‘ä»¬å°±ä¼šç¨å¾®è€½è¯¯å¦ä¸€ä¸ªã€‚
+		// è¦å¾—åˆ°è‰¯å¥½çš„è§£,æˆ‘ä»¬éœ€è¦å¤šæ¬¡è¿­ä»£æ‰€æœ‰çº¦æŸã€‚æ‰€ä»¥å°±æœ‰å¿…è¦æ§åˆ¶è¿­ä»£è®¡ç®—çš„æ¬¡æ•°ä»¥é˜²æ­¢æ— é™å¾ªç¯ï¼Œæ¨èè¿­ä»£æ¬¡æ•°ä¸º10èƒ½è¾ƒå¥½çš„æ¨¡æ‹Ÿæ•ˆæœã€‚
 		b2world.step(1.0f / GameUpdate.MAX_FPS, 10, 10);
 	}
 
@@ -163,7 +163,7 @@ public class GameWorld {
 		if (Gdx.input.isTouched() && Gdx.input.justTouched()) {
 			float factorx = 480.0f / Gdx.graphics.getWidth();
 			float factory = 800.0f / Gdx.graphics.getHeight();
-			// ±ä»»µ½800*480ÏÂ
+			// å˜æ¢åˆ°800*480ä¸‹
 			float pointx = (int) (Gdx.input.getX() * factorx);
 			float pointy = 800 - (int) (Gdx.input.getY() * factory);
 			Bullet arrow = new Bullet(pointx, pointy, 80, 16);
@@ -177,7 +177,7 @@ public class GameWorld {
 	public void dispose() {
 	}
 
-	//²úÉúµĞÈË
+	//äº§ç”Ÿæ•Œäºº
 	public void born(String param, float parseFloat, float parseFloat2,
 			float parseFloat3) {
 		Enemy a = new Enemy(100, 800, 30, 30);

@@ -11,30 +11,30 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 /**
- * ÊÀ½ç½Å±¾ ¿ØÖÆ¸üĞÂÊÀ½çÖĞµÄµĞÈË£¬×Óµ¯£¬ÌØĞ§£¬¼¼ÄÜ£¬¶Ô»°¿ò ÇĞ»»SCREEN£¬ÇĞ»»ÊÀ½ç½Å±¾
+ * ä¸–ç•Œè„šæœ¬ æ§åˆ¶æ›´æ–°ä¸–ç•Œä¸­çš„æ•Œäººï¼Œå­å¼¹ï¼Œç‰¹æ•ˆï¼ŒæŠ€èƒ½ï¼Œå¯¹è¯æ¡† åˆ‡æ¢SCREENï¼Œåˆ‡æ¢ä¸–ç•Œè„šæœ¬
  */
 public class MyWorldScript {
 	/**
-	 * ½Å±¾ÔËĞĞµÄframeÊı
+	 * è„šæœ¬è¿è¡Œçš„frameæ•°
 	 */
 	int elaspedframe = 0;
 	GameWorld gWorld;
 	XmlReader reader = new XmlReader();
 	/**
-	 * ¸ù½Úµã, beginscriptÊ±³õÊ¼»¯
+	 * æ ¹èŠ‚ç‚¹, beginscriptæ—¶åˆå§‹åŒ–
 	 */
 	Element node;
 	/**
-	 * µ±Ç°ÔªËØ
+	 * å½“å‰å…ƒç´ 
 	 */
 	Element currentElement;
 	int currentno = 0;
 	/**
-	 * µ±Ç°ÔªËØ
+	 * å½“å‰å…ƒç´ 
 	 */
 	int nodesum = 0;
 	/**
-	 * ±êÖ¾
+	 * æ ‡å¿—
 	 */
 	boolean DIALOG;
 	boolean WAIT;
@@ -44,10 +44,10 @@ public class MyWorldScript {
 	boolean NULL;
 	public boolean isfinished=true;
 	/**
-	 * WAIT,UNTILµÄ¼ÆÊ±Æ÷
+	 * WAIT,UNTILçš„è®¡æ—¶å™¨
 	 */
 	int counter = 0;
-	// ÓÃµ½µÄ×ÊÔ´µÄÂ·¾¶
+	// ç”¨åˆ°çš„èµ„æºçš„è·¯å¾„
 	String scriptpathString = "worldscript/";
 
 	public MyWorldScript(GameWorld gWorld) {
@@ -84,7 +84,7 @@ public class MyWorldScript {
 			return;
 		}
 		if (NULL) {
-			// ½Å±¾½áÊøºó£¬Ê²Ã´¶¼²»Ö´ĞĞ¡£
+			// è„šæœ¬ç»“æŸåï¼Œä»€ä¹ˆéƒ½ä¸æ‰§è¡Œã€‚
 			// worldupdate();
 		} else {
 			while (true) {
@@ -118,7 +118,7 @@ public class MyWorldScript {
 					}
 					break;
 				}
-				// ½Å±¾Ö´ĞĞÍê±Ï
+				// è„šæœ¬æ‰§è¡Œå®Œæ¯•
 				if (NULL) {
 					break;
 				}
@@ -129,7 +129,7 @@ public class MyWorldScript {
 	}
 
 	/**
-	 * ¶ÁÈ¡ÏÂÒ»½Úµã£¬Èç¹ûÒÑ¾­ÊÇÎ²½Úµã£¬ÔòNULL = true;
+	 * è¯»å–ä¸‹ä¸€èŠ‚ç‚¹ï¼Œå¦‚æœå·²ç»æ˜¯å°¾èŠ‚ç‚¹ï¼Œåˆ™NULL = true;
 	 */
 	private void readnextnode() {
 		if (currentno == nodesum - 1) {
@@ -152,8 +152,8 @@ public class MyWorldScript {
 	}
 
 	/**
-	 * ¶ÁÈ¡µ±Ç°½Úµã ÖØÖÃcounterµÄÖµ ÊÀ½ç½Å±¾ÃüÁî WAIT µÈ´ı DIALOG ¶Ô»° UNTILCLEAR Ö±µ½µĞÈË±»ÏûÃğ WAITUNTIL
-	 * µÈµ½¹Ì¶¨Ê±¼ä BORN ²úÉúµĞÈË
+	 * è¯»å–å½“å‰èŠ‚ç‚¹ é‡ç½®counterçš„å€¼ ä¸–ç•Œè„šæœ¬å‘½ä»¤ WAIT ç­‰å¾… DIALOG å¯¹è¯ UNTILCLEAR ç›´åˆ°æ•Œäººè¢«æ¶ˆç­ WAITUNTIL
+	 * ç­‰åˆ°å›ºå®šæ—¶é—´ BORN äº§ç”Ÿæ•Œäºº
 	 */
 	private void readnode() throws UnsupportedEncodingException {
 		counter = 0;
@@ -194,7 +194,7 @@ public class MyWorldScript {
 	}
 
 	/**
-	 * readattribute ¶ÁÈ¡XMLÊôĞÔ£¬Èç¹ûÊôĞÔ²»´æÔÚ£¬Ôò·µ»Ø"null"
+	 * readattribute è¯»å–XMLå±æ€§ï¼Œå¦‚æœå±æ€§ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›"null"
 	 */
 	String readattribute(String name) throws UnsupportedEncodingException {
 		String temp;

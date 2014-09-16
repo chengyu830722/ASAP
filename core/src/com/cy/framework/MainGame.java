@@ -16,7 +16,7 @@ public class MainGame extends Game {
 	public float musicvolume;
 	public float soundvolume;
 
-	// 屏幕变换因子
+	// 灞忓箷鍙樻崲鍥犲瓙
 	public float factorx;
 	public float factory;
 
@@ -34,13 +34,13 @@ public class MainGame extends Game {
 		verticalcamera.translate(-160, 160);
 		verticalcamera.update();
 
-		// 加载字体
+		// 鍔犺浇瀛椾綋
 		bitmapFont = new BitmapFont(Gdx.files.internal("font/chn.fnt"), false);
 		bitmapFont.setScale(0.8f);
 		bitmapFont.setColor(0, 0, 0, 1);
 		this.gs = new GameScreen(this);
 
-		// 屏幕变换因子
+		// 灞忓箷鍙樻崲鍥犲瓙
 		factorx = 800.0f / Gdx.graphics.getWidth();
 		factory = 480.0f / Gdx.graphics.getHeight();
 

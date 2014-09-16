@@ -6,9 +6,9 @@ public class GameProcess extends GameUpdate {
 	GameWorld gWorld;
 	Boolean pause;
 
-	// GameProcess¿ØÖÆÓÎÏ·½ø³Ì¡£ÔİÍ££¬½áÊø¡£
-	// ÔÚÔËĞĞ»ºÂıÊ±£¬Í¨¹ı¿ØÖÆworldrender£¬worldupdateÀ´ÌøÖ¡¡£
-	// ÓÎÏ·µÄRENDERºÍUPDATEÓÉGameWorld¸ºÔğ¡£
+	// GameProcessæ§åˆ¶æ¸¸æˆè¿›ç¨‹ã€‚æš‚åœï¼Œç»“æŸã€‚
+	// åœ¨è¿è¡Œç¼“æ…¢æ—¶ï¼Œé€šè¿‡æ§åˆ¶worldrenderï¼Œworldupdateæ¥è·³å¸§ã€‚
+	// æ¸¸æˆçš„RENDERå’ŒUPDATEç”±GameWorldè´Ÿè´£ã€‚
 	GameProcess(MainGame mainGame) {
 		pause = false;
 		this.mainGame = mainGame;

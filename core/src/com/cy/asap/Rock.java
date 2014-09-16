@@ -18,7 +18,7 @@ public class Rock {
 	public float y;
 	public float width;
 	public float height;
-	//ÒòÎªÌùÍ¼±ßÔµµÄ¿Õ°×£¬Êµ¼ÊµÄÎïÆ·µÄÅö×²Ìå»ı£¬Ó¦¸ÃÂÔĞ¡
+	//å› ä¸ºè´´å›¾è¾¹ç¼˜çš„ç©ºç™½ï¼Œå®é™…çš„ç‰©å“çš„ç¢°æ’ä½“ç§¯ï¼Œåº”è¯¥ç•¥å°
 	public float factor=1f;
 	public float rotation;
 	private Body body;
@@ -49,8 +49,8 @@ public class Rock {
 	public void update1f(SpriteBatch batch) {
 	}
 	
-	//Box2DÏà¹Øº¯Êı
-	//BOX2DÔ­µã£¬×óÉÏ¡£
+	//Box2Dç›¸å…³å‡½æ•°
+	//BOX2DåŸç‚¹ï¼Œå·¦ä¸Šã€‚
 	public void attachBox2D(World b2world)
 	{
 		Vector2 position=new Vector2(x/GlobalVal.M2P,y/GlobalVal.M2P);

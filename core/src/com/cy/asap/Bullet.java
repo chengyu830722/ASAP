@@ -21,12 +21,12 @@ public class Bullet {
 	public float y;
 	public float width;
 	public float height;
-	// ÒòÎªÌùÍ¼±ßÔµµÄ¿Õ°×£¬Êµ¼ÊµÄÎïÆ·µÄÅö×²Ìå»ı£¬Ó¦¸ÃÂÔĞ¡
+	// å› ä¸ºè´´å›¾è¾¹ç¼˜çš„ç©ºç™½ï¼Œå®é™…çš„ç‰©å“çš„ç¢°æ’ä½“ç§¯ï¼Œåº”è¯¥ç•¥å°
 	private float factor = 0.7f;
 	private float rotation;
 	public Body body;
 	private boolean alive = true;;
-	// TextureÖ»¼ÓÔØÒ»·İPNGµ½GPU¡£
+	// TextureåªåŠ è½½ä¸€ä»½PNGåˆ°GPUã€‚
 	private static final Texture TEXTURE = new Texture(
 			Gdx.files.internal("data/arrow.png"));
 
@@ -62,7 +62,7 @@ public class Bullet {
 	}
 
 	private boolean checkInBound() {
-		// ¼ì²âÊÇ·ñ³¬Ô½±ß½ç
+		// æ£€æµ‹æ˜¯å¦è¶…è¶Šè¾¹ç•Œ
 		if ((x < (0 - GlobalVal.BOUND))
 				|| (x > (GlobalVal.WIDTH + GlobalVal.BOUND))
 				|| (y < (0 - GlobalVal.BOUND))
@@ -72,13 +72,13 @@ public class Bullet {
 			return true;
 	}
 
-	// Box2DÏà¹Øº¯Êı
-	// BOX2DÔ­µã£¬×óÉÏ¡£
+	// Box2Dç›¸å…³å‡½æ•°
+	// BOX2DåŸç‚¹ï¼Œå·¦ä¸Šã€‚
 	public void attachBox2D(World b2world) {
 		Vector2 position = new Vector2(x / GlobalVal.M2P, y / GlobalVal.M2P);
 
 		BodyDef bodyDef = new BodyDef();
-		// ×èÄáÓÃÓÚ¼õĞ¡ÎïÌåÔÚÊÀ½çÖĞµÄËÙ¶È¡£×èÄá¸úÄ¦²ÁÓĞËù²»Í¬,Ä¦²Á½öÔÚÎïÌåÓĞ½Ó´¥µÄÊ±ºò²Å»á·¢Éú¡£
+		// é˜»å°¼ç”¨äºå‡å°ç‰©ä½“åœ¨ä¸–ç•Œä¸­çš„é€Ÿåº¦ã€‚é˜»å°¼è·Ÿæ‘©æ“¦æœ‰æ‰€ä¸åŒ,æ‘©æ“¦ä»…åœ¨ç‰©ä½“æœ‰æ¥è§¦çš„æ—¶å€™æ‰ä¼šå‘ç”Ÿã€‚
 		bodyDef.angularDamping = 1f;
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(position);
@@ -95,9 +95,9 @@ public class Bullet {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
 		fixtureDef.density = 10f;
-		// µ¯ĞÔ
+		// å¼¹æ€§
 		fixtureDef.restitution = 0.1f;
-		// Ä¦²Á
+		// æ‘©æ“¦
 		fixtureDef.friction = 1f;
 		body.createFixture(fixtureDef);
 		polygonShape.dispose();

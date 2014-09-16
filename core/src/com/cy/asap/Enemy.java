@@ -26,9 +26,6 @@ public class Enemy {
 	private float rotation;
 	private Body body;
 	private boolean alive = true;;
-	// 所有的ENEMY只加载一份PNG到GPU。
-	private static final Texture TEXTURE = new Texture(
-			Gdx.files.internal("data/xigua.png"));
 
 	public Enemy(float x, float y, float width, float height) {
 		this.x = x;
@@ -36,8 +33,8 @@ public class Enemy {
 		this.width = width;
 		this.height = height;
 		rotation = 0;
-		TEXTURE.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		sprite = new Sprite(TEXTURE);
+		Texture tex = GlobalVal.manager.get("data/xigua.png", Texture.class);
+		sprite = new Sprite(tex);
 		sprite.setSize(width, height);
 		sprite.setOrigin(width / 2, height / 2);
 		sprite.setPosition(x - width / 2, y - height / 2);

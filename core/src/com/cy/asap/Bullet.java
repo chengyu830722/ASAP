@@ -26,9 +26,6 @@ public class Bullet {
 	private float rotation;
 	public Body body;
 	private boolean alive = true;;
-	// Texture只加载一份PNG到GPU。
-	private static final Texture TEXTURE = new Texture(
-			Gdx.files.internal("data/arrow.png"));
 
 	public Bullet(float x, float y, float width, float height) {
 		this.x = x;
@@ -36,8 +33,8 @@ public class Bullet {
 		this.width = width;
 		this.height = height;
 		rotation = 0;
-		TEXTURE.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		sprite = new Sprite(TEXTURE);
+		Texture tex = GlobalVal.manager.get("data/arrow.png", Texture.class);
+		sprite = new Sprite(tex);
 		sprite.setSize(width, height);
 		sprite.setOrigin(width / 2, height / 2);
 		sprite.setPosition(x - width / 2, y - height / 2);
@@ -94,7 +91,7 @@ public class Bullet {
 		// rotation);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
-		fixtureDef.density = 10f;
+		fixtureDef.density = 2f;
 		// 弹性
 		fixtureDef.restitution = 0.1f;
 		// 摩擦

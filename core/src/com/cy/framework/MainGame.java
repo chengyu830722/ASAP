@@ -2,8 +2,12 @@ package com.cy.framework;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class MainGame extends Game {
@@ -19,7 +23,6 @@ public class MainGame extends Game {
 	// 屏幕变换因子
 	public float factorx;
 	public float factory;
-
 	@Override
 	public void create() {
 		musicvolume = 0.5f;
@@ -34,6 +37,10 @@ public class MainGame extends Game {
 		verticalcamera.translate(-160, 160);
 		verticalcamera.update();
 
+		//加载字幕。
+		GlobalVal.manager = new AssetManager();
+		LoadAssets(GlobalVal.manager );
+		
 		// 加载字体
 		bitmapFont = new BitmapFont(Gdx.files.internal("font/chn.fnt"), false);
 		bitmapFont.setScale(0.8f);
@@ -48,6 +55,13 @@ public class MainGame extends Game {
 		setScreen(startscreen);
 	}
 
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		GlobalVal.manager.clear();
+		super.dispose();
+	}
+
 	public void playmusic(String name) {
 		if (Music != null) {
 			Music.dispose();
@@ -56,5 +70,15 @@ public class MainGame extends Game {
 		Music.setVolume(musicvolume);
 		Music.setLooping(true);
 		Music.play();
+	}
+	
+	public void LoadAssets(AssetManager manager)
+	{
+		TextureParameter param = new TextureParameter();
+		param.minFilter = TextureFilter.Linear;
+		param.genMipMaps = true;
+		GlobalVal.manager.load("data/xigua.png", Texture.class, param);
+		GlobalVal.manager.load("data/arrow.png", Texture.class, param);
+		GlobalVal.manager.finishLoading();
 	}
 }

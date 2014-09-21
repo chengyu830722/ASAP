@@ -79,6 +79,9 @@ public class MainGame extends Game {
 		param.genMipMaps = true;
 		GlobalVal.manager.load("data/xigua.png", Texture.class, param);
 		GlobalVal.manager.load("data/arrow.png", Texture.class, param);
+		GlobalVal.manager.load("data/CP_BJ.jpg", Texture.class, param); //加载选关的背景
+		GlobalVal.manager.load("data/CK1.png", Texture.class, param); //加载关卡资源
+		
 		GlobalVal.manager.finishLoading();
 	}
 }

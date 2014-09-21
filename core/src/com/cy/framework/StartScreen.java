@@ -14,6 +14,7 @@ public class StartScreen implements Screen{
 	//TODO 建立一个Stage，把控件添加到Stage中。写各控件的回调函数。
 	
 	private MainGame game;  //游戏类的引用   主要用于切换屏幕
+	public SelectStageScreen selectScreen; //选择窗口
 	private Stage startStage ;  //建立一个舞台类主要用 装载 图片（演员）
 	private Texture bgTexture ;  //背景图片纹理
 	
@@ -38,8 +39,8 @@ public class StartScreen implements Screen{
 	       batch.draw(bgTexture,0, 0, 480, 800);
 	       batch.end();
 	       
-	       startStage.act();
-	       startStage.draw();
+	       startStage.act();  
+	       startStage.draw();  //画舞台
 	}
 
 	@Override
@@ -63,7 +64,10 @@ public class StartScreen implements Screen{
 	           public boolean touchDown(InputEvent event, float x, float y,
 	                   int pointer, int button) {
                // TODO Auto-generated method stub
-               game.setScreen(game.gs);
+	        	   
+	        	selectScreen  = new SelectStageScreen(game);
+	        	game.setScreen(selectScreen);
+
                return super.touchDown(event, x, y, pointer, button);
 	           }
 	           

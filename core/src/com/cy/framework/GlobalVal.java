@@ -1,7 +1,5 @@
 package com.cy.framework;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.assets.AssetManager;

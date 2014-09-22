@@ -1,12 +1,9 @@
 package com.cy.framework.screen;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -64,8 +61,8 @@ public class SelectStageScreen implements Screen, GestureListener {
 			int x = GlobalVal.stagelist[i].x;
 			int y = GlobalVal.stagelist[i].y;
 			int no = GlobalVal.stagelist[i].stageno;
-			SelStageButton temp = new SelStageButton(x, y, no, this.game,
-					this.selectStage);
+			LevelFactory fac = new LevelFactory(x, y, no, this.game);
+			selectStage.addActor(fac.createLevel());
 		}
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(new GestureDetector(this)); // 设置手势监听
@@ -152,7 +149,6 @@ public class SelectStageScreen implements Screen, GestureListener {
 
 	private void moveCamera(float deltaX, float deltaY) {
 		selectStage.getViewport().getCamera().position.x -= deltaX;
-		;
 		selectStage.getViewport().getCamera().position.y += deltaY;
 		if (selectStage.getViewport().getCamera().position.x < 240) {
 			selectStage.getViewport().getCamera().position.x = 240;

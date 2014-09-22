@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+    <dialog name="教程" data="本游戏是一款射击游戏(STG)"></dialog>
+    <dialog name="教程" data="绿色的血条表示主角的生命值，红色的表示能量"></dialog>
+    <dialog name="教程" data="太极圆盘用来控制主角的飞行方向"></dialog>
+    <dialog name="教程" data="旁边的几个图标，可以用来释放强力的必杀技"></dialog>
+    <dialog name="教程" data="图标为淡蓝色时，表示能量不足，红色则表示正在冷却中"></dialog>
+    <dialog name="教程" data="当主角接近子弹时，可以获得能量，剑刃也会发出蓝色辉光"></dialog>
+    <dialog name="教程" data="想要获得更多能量，请靠近子弹"></dialog>
+    <dialog name="教程" data="当然不要离的太近，如果被击中就会掉血"></dialog>
+    <dialog name="教程" data="一旦被击中后，主角会短暂无敌几秒。"></dialog>
+    <dialog name="教程" data="主角处于无敌状态时，会发出黄色的斗气。"></dialog>
+    <dialog name="教程" data="一些技能也可以使主角处于无敌状态。"></dialog>
+    <dialog name="教程" data="胆大心细，明镜止水，就可以看在弹幕中找到生机"></dialog>
+</scene>

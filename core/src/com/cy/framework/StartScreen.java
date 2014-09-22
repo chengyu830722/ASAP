@@ -32,12 +32,10 @@ public class StartScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
 	       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 	       batch.begin();    
 	       batch.draw(bgTexture,0, 0, 480, 800);
 	       batch.end();
-	       
 	       startStage.act();
 	       startStage.draw();
 	}
@@ -62,8 +60,7 @@ public class StartScreen implements Screen{
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,
 	                   int pointer, int button) {
-               // TODO Auto-generated method stub
-               game.setScreen(game.gs);
+               game.setScreen(game.dialogscreen);
                return super.touchDown(event, x, y, pointer, button);
 	           }
 	           
@@ -78,7 +75,7 @@ public class StartScreen implements Screen{
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+		this.dispose();
 	}
 
 	@Override
@@ -95,9 +92,7 @@ public class StartScreen implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		startStage.dispose();
+	//	Gdx.input.setInputProcessor(null);
 	}
-
-
 }

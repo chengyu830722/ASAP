@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+	<dialog cutin="hero_C2.png" name="???" data="恩!有人来了。"></dialog>
+	<dialog cutin="hyde_c1.png" name="杂兵B" data="喂，击毁了我们侦察机的混蛋就是你吗?"></dialog>
+	<dialog cutin="hero_C2.png" name="王大明" data="你好。初次见面，我叫王大明。叫我小明就好了。"></dialog>
+	<dialog cutin="ju_c1.png" name="杂兵C" data="你好。"></dialog>
+	<dialog cutin="hason_c1.png" name="杂兵A" data="哦，先砸光我们的东西，然后再来套近乎嘛。"></dialog>
+	<dialog cutin="hero_C2.png" name="王大明" data="你们误会了，侦察机不是我击毁的，我也是刚刚来到这。"></dialog>
+	<dialog cutin="hero_C1.png" name="王大明" data="反正这也只是试玩DEMO，能不能就这样放我过去。"></dialog>
+	<dialog cutin="hason_c1.png" name="杂兵A" data="不要做奇怪的发言。"></dialog>
+	<dialog cutin="hyde_c1.png" name="杂兵B" data="你以为我们是偶然出现在这吗，哼哼，小明?"></dialog>
+	<dialog cutin="hason_c1.png" name="杂兵A" data="我们已经等你很久了，林泉凉。"></dialog>
+	<dialog cutin="hero_C2.png" name="林泉凉" data="!(等我?这也是你干的好事吧!!绯宇!)"></dialog>
+	<dialog cutin="ju_c1.png" name="杂兵C" data="喂，这家伙腰上的，不是雷公鞭吗??!!"></dialog>
+	<dialog cutin="hason_c1.png" name="杂兵A" data="这怎么可能?!雷公鞭为什么会在你的手上?!"></dialog>
+	<dialog cutin="hero_C2.png" name="林泉凉" data="哦!连这个都认识吗?对不起，我以为你们是杂兵呢。"></dialog>
+	<dialog cutin="hero_C2.png" name="林泉凉" data="既然已经知道我是谁了，看来是躲不过一战了。"></dialog>
+	<dialog cutin="ju_c1.png" name="杂兵C" data="很有镇定啊。"></dialog>
+	<dialog cutin="hyde_c1.png" name="杂兵B" data="拿着雷公鞭，有恃无恐吧。"></dialog>
+	<dialog cutin="hero_C2.png" name="林泉凉" data="不用担心，我不会在这里用这个东西的。我也不想弄出太大的动静"></dialog>
+	<dialog cutin="ju_c1.png" name="桔" data="哈哈哈哈，他说不想弄出太大动静。"></dialog>
+	<dialog cutin="hyde_c1.png" name="海德" data="放心好了，马上就让你闭嘴"></dialog>
+	<dialog cutin="hason_c1.png" name="哈桑" data="把我们当做杂兵吗?那就来试试你的本事吧"></dialog>
+</scene>

@@ -80,7 +80,7 @@ public class Bullet {
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(position);
 		bodyDef.angle = rotation * MathUtils.degreesToRadians;
-		;
+		
 		Body body = b2world.createBody(bodyDef);
 		this.body = body;
 

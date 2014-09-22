@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+  <dialog data="旧历2199年,地球的资源已经接近衰竭，全球70%的大陆都处在重度空气污染和水污染中。" pic="deathworld.png" music="nocturen.mp3"></dialog>
+  <dialog data="人类文明正在衰退之中。"></dialog>
+  <dialog data="这个时候，人类在科学研究的过程中发现了一个异次元空间。人们将其命名为太极。" pic="taiji.png"></dialog>
+  <dialog data="太极中蕴含有巨大的能量。"></dialog>
+  <dialog data="各种基于在太极之上的新技术，迅速发展起来。"></dialog>
+  <dialog data="所有人都相信，人类正在进入一个新的繁荣时代。"></dialog>
+  <dialog data="就在这个时候，一个来自太极境界深处的怪物出现了。" pic="salong.png"></dialog>
+  <dialog data="那威严的姿势，恐怖的力量，只能用中国古代神话中生物的来形容--煞龙。"></dialog>
+  <dialog data="和煞龙一起出现的还有妖魔。它们一出现就对人类展开了攻击。"></dialog>
+  <dialog data="人类的武器在这些异世界的生物面前,几乎毫无效果。"></dialog>
+  <dialog data="人类旧有的秩序完全崩溃,为了对付煞龙,人类成立了统一政府--圣府。"></dialog>
+  <dialog data="圣府聚集了全人类的智慧和力量最后终于将煞龙消灭。而人类的人口也锐减了4/5。"></dialog>
+  <dialog data="经过人类几十年的努力，终于各地残余的妖魔得到压制。人类的人口也已经恢复到了大战前的一半。" pic="chenming.png"></dialog>
+  <dialog data="世界正在恢复旧有的秩序。就在这个时候，一个男人出现了。"></dialog>
+</scene>

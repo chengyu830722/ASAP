@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -36,7 +37,7 @@ public class GameWorld {
 	public OrthographicCamera camera;
 	public OrthographicCamera box2dcamera;
 
-	SpriteBatch batch;
+	public SpriteBatch batch;
 	// 世界总帧数
 	int WorldFrames;
 	// MainGame
@@ -96,13 +97,16 @@ public class GameWorld {
 			b2debugRenderer.render(b2world, box2dcamera.combined);
 			// 绘制文字
 			batch.begin();
-			mainGame.bitmapFont.drawWrapped(
+			BitmapFont bitmapFont=GlobalVal.manager.get("font/chn.fnt", BitmapFont.class);
+			bitmapFont.setScale(0.8f);
+			bitmapFont.setColor(0, 0, 0, 1);
+			bitmapFont.drawWrapped(
 					batch,
 					"enemy数量:" + EnemyList.size() + " BodySize"
 							+ b2world.getBodyCount(), 10, 40, 480);
-			mainGame.bitmapFont.drawWrapped(batch, "frame:" + WorldFrames, 10,
+			bitmapFont.drawWrapped(batch, "frame:" + WorldFrames, 10,
 					70, 300);
-			mainGame.bitmapFont.drawWrapped(batch, "fps:"
+			bitmapFont.drawWrapped(batch, "fps:"
 					+ Gdx.app.getGraphics().getFramesPerSecond(), 10, 100, 300);
 			batch.end();
 		}
@@ -175,6 +179,7 @@ public class GameWorld {
 	}
 
 	public void dispose() {
+		batch.dispose();
 	}
 
 	//产生敌人

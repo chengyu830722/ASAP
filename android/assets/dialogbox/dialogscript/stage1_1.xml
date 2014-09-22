@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+	<dialog cutin="hero_C2.png" name="???" data="到处都是侦察机,看来祭坛已经不远了。"
+		music="princess.mp3" skipmusic="10  Dead Heat.mp3"></dialog>
+	<dialog cutin="hero_C2.png" name="???" data="看这种守备级别,圣府也动了真格的呢。"></dialog>
+	<dialog cutin="hero_C2.png" name="???" data="绯宇那个家伙,前一阵子在丰宁大闹了一番。"></dialog>
+	<dialog cutin="hero_C2.png" name="???"
+		data="都怪他,我现在要面对这么多敌人。也不知道那家伙现在在干吗呢。。。。"></dialog>
+	<dialog cutin="hero_C2.png" name="???" data="好了,那么先做下热身运动吧!"
+		music="10  Dead Heat.mp3"></dialog>
+</scene>

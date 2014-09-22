@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class MainGame extends Game {
-	public GameScreen gs;
+	public GameScreen gamescreen;
 	public StartScreen startscreen;
+	public DialogScreen dialogscreen;
+	
 	public OrthographicCamera camera;
 	public OrthographicCamera verticalcamera;
-	public BitmapFont bitmapFont;
+	
 	public Music Music;
 	public float musicvolume;
 	public float soundvolume;
@@ -31,33 +33,22 @@ public class MainGame extends Game {
 		camera.setToOrtho(false, 800, 480);
 		camera.update();
 
-		verticalcamera = new OrthographicCamera();
-		verticalcamera.setToOrtho(false, 800, 480);
-		verticalcamera.rotate(90);
-		verticalcamera.translate(-160, 160);
-		verticalcamera.update();
-
-		//加载字幕。
+		//加载资源
 		GlobalVal.manager = new AssetManager();
-		LoadAssets(GlobalVal.manager );
+		LoadAssets(GlobalVal.manager);
 		
-		// 加载字体
-		bitmapFont = new BitmapFont(Gdx.files.internal("font/chn.fnt"), false);
-		bitmapFont.setScale(0.8f);
-		bitmapFont.setColor(0, 0, 0, 1);
-		this.gs = new GameScreen(this);
-
+		this.gamescreen = new GameScreen(this);
+		this.startscreen = new StartScreen(this);
+		this.dialogscreen=new DialogScreen(this);
+		
 		// 屏幕变换因子
 		factorx = 800.0f / Gdx.graphics.getWidth();
 		factory = 480.0f / Gdx.graphics.getHeight();
-
-		this.startscreen = new StartScreen(this);
 		setScreen(startscreen);
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		GlobalVal.manager.clear();
 		super.dispose();
 	}
@@ -74,6 +65,9 @@ public class MainGame extends Game {
 	
 	public void LoadAssets(AssetManager manager)
 	{
+		// 加载字体
+		manager.load("font/chn.fnt", BitmapFont.class);
+		// 加载纹理
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
 		param.genMipMaps = true;
@@ -82,3 +76,4 @@ public class MainGame extends Game {
 		GlobalVal.manager.finishLoading();
 	}
 }
+

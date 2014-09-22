@@ -9,7 +9,7 @@ public class GameProcess extends GameUpdate {
 	// GameProcess控制游戏进程。暂停，结束。
 	// 在运行缓慢时，通过控制worldrender，worldupdate来跳帧。
 	// 游戏的RENDER和UPDATE由GameWorld负责。
-	GameProcess(MainGame mainGame) {
+	public GameProcess(MainGame mainGame) {
 		pause = false;
 		this.mainGame = mainGame;
 		loadnewworld();

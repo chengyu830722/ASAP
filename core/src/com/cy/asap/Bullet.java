@@ -1,8 +1,6 @@
 package com.cy.asap;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -27,6 +25,7 @@ public class Bullet {
 	public Body body;
 	private boolean alive = true;;
 
+	
 	public Bullet(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;

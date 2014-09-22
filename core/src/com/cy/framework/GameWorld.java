@@ -4,25 +4,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
 import com.cy.asap.Hero;
 import com.cy.asap.Rock;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 
 public class GameWorld {
 	// 主人公
@@ -153,8 +145,6 @@ public class GameWorld {
 			a.attachBox2D(b2world);
 			b.attachBox2D(b2world);
 			c.attachBox2D(b2world);
-		} else {
-			int x = 3;
 		}
 		WorldFrames++;
 		// 约束求解器(constraint solver)：用于解决模拟中的所有约束,一次一个。

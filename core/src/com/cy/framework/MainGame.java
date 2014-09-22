@@ -9,11 +9,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.cy.framework.screen.DialogScreen;
+import com.cy.framework.screen.GameScreen;
+import com.cy.framework.screen.SelectStageScreen;
+import com.cy.framework.screen.StartScreen;
 
 public class MainGame extends Game {
 	public GameScreen gamescreen;
 	public StartScreen startscreen;
 	public DialogScreen dialogscreen;
+	public SelectStageScreen selectstagescreen;
 	
 	public OrthographicCamera camera;
 	public OrthographicCamera verticalcamera;
@@ -29,6 +34,7 @@ public class MainGame extends Game {
 	public void create() {
 		musicvolume = 0.5f;
 		soundvolume = 0.6f;
+		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		camera.update();
@@ -40,6 +46,7 @@ public class MainGame extends Game {
 		this.gamescreen = new GameScreen(this);
 		this.startscreen = new StartScreen(this);
 		this.dialogscreen=new DialogScreen(this);
+		this.selectstagescreen=new SelectStageScreen(this);
 		
 		// 屏幕变换因子
 		factorx = 800.0f / Gdx.graphics.getWidth();
@@ -73,6 +80,8 @@ public class MainGame extends Game {
 		param.genMipMaps = true;
 		GlobalVal.manager.load("data/xigua.png", Texture.class, param);
 		GlobalVal.manager.load("data/arrow.png", Texture.class, param);
+		GlobalVal.manager.load("data/SelStageBG.png", Texture.class, param); //加载选关的背景
+		GlobalVal.manager.load("data/SelStageBtn.png", Texture.class, param); //加载关卡资源
 		GlobalVal.manager.finishLoading();
 	}
 }

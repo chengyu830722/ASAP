@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.cy.framework.screen.MyButton;
 import com.cy.tool.MyMath;
 
 /**
@@ -75,7 +76,7 @@ public class MyDialogBox {
 	String cutinpathString = "dialogbox/cutin/";
 	String scriptpathString = "dialogbox/dialogscript/";
 
-	MyDialogBox() {
+	public MyDialogBox() {
 		reader = new XmlReader();
 		// 加载字体
 		bitmapFont = GlobalVal.manager.get("font/chn.fnt", BitmapFont.class);
@@ -287,7 +288,7 @@ public class MyDialogBox {
 	}
 
 	//
-	void finish() {
+	public void finish() {
 		isalive = false;
 		if (backgroundTexture != null) {
 			backgroundTexture.dispose();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -83,6 +84,9 @@ public class MainGame extends Game {
 		GlobalVal.manager.load("data/SelStageBG.png", Texture.class, param); //加载选关的背景
 		GlobalVal.manager.load("data/SelStageBtn.png", Texture.class, param); 
 		GlobalVal.manager.load("data/SelStageBtn2.png", Texture.class, param);
+		GlobalVal.manager.load("sound/sd1.mp3", Sound.class);
+		GlobalVal.manager.load("sound/sd2.mp3", Sound.class);
+		GlobalVal.manager.load("sound/sd3.mp3", Sound.class);
 		GlobalVal.manager.finishLoading();
 	}
 }

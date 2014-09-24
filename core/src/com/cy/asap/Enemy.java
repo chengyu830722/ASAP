@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.cy.framework.Box2DUserData;
 import com.cy.framework.GlobalVal;
 
 public class Enemy {
@@ -78,9 +79,12 @@ public class Enemy {
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(position);
 		bodyDef.angle = rotation * MathUtils.degreesToRadians;
-		;
+		
 		Body body = b2world.createBody(bodyDef);
 		this.body = body;
+		//将指针存入这里，之后可以通过getUserData取得body对应的Enemy对象。
+		Box2DUserData data=new Box2DUserData("Enemy",this);
+		body.setUserData(data);
 
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(width * factor / 2 / GlobalVal.M2P, height

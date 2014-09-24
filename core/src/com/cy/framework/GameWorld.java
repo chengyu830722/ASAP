@@ -57,6 +57,7 @@ public class GameWorld {
 
 		// 初始化BOX2D world
 		b2world = new World(new Vector2(0, -9.81f), true);
+		b2world.setContactListener(new Box2DContactListener());
 		// 初始化起始点
 		WorldFrames = 0;
 		Rock rock1 = new Rock(240, 100, 480, 20);
@@ -102,6 +103,7 @@ public class GameWorld {
 					+ Gdx.app.getGraphics().getFramesPerSecond(), 10, 100, 300);
 			batch.end();
 		}
+		
 	}
 
 	// BOX2D libgdx 都是坐下角原点。

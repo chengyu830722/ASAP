@@ -15,4 +15,11 @@
 		<nature>org.springsource.ide.eclipse.gradle.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>DOC</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/DOC</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

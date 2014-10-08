@@ -24,8 +24,10 @@ public class Enemy {
 	private float factor = 0.7f;
 	private float rotation;
 	private Body body;
-	private boolean alive = true;;
-
+	public boolean alive = true;;
+	//状态
+	enum Status{NORMAL,AFTERHIT};
+	Status status=Status.NORMAL;
 	public Enemy(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
@@ -50,7 +52,13 @@ public class Enemy {
 	}
 
 	public void update1f(SpriteBatch batch) {
+		//超出世界边界，死亡
 		alive = checkInBound();
+		//击中后
+		if (status==Status.AFTERHIT) {
+			alive=false;
+		}
+		
 	}
 
 	public boolean getAlive() {
@@ -117,6 +125,11 @@ public class Enemy {
 
 	public float getRotationDegrees() {
 		return body.getAngle() * MathUtils.radiansToDegrees;
+	}
+
+	public void kill() {
+		// TODO Auto-generated method stub
+		alive=false;
 	}
 
 }

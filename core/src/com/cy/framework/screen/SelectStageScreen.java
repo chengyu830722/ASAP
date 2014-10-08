@@ -35,7 +35,7 @@ public class SelectStageScreen implements Screen, GestureListener {
 		stage.draw();
 		// 惯性
 		if (!Gdx.input.isTouched()) {
-			if ((speedx > 0.001f) || (speedy > 0.001f)) {
+			if ((Math.abs(speedx) > 0.001f) || (Math.abs(speedy) > 0.001f)) {
 				moveCamera(speedx, speedy);
 				speedx = speedx * 0.95f;
 				speedy = speedy * 0.95f;

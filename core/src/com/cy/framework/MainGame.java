@@ -88,6 +88,11 @@ public class MainGame extends Game {
 		GlobalVal.manager.load("sound/sd2.mp3", Sound.class);
 		GlobalVal.manager.load("sound/sd3.mp3", Sound.class);
 		GlobalVal.manager.finishLoading();
+		
+		//加载texpacker
+//		manager.load("data/pack", TextureAtlas.class);
+//		TextureAtlas tex2=manager.get("data/pack", TextureAtlas.class);
+//		Texture tex=manager.get("data/pack", TextureAtlas.class).findRegion("particle-star");
 	}
 }
 

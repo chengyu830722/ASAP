@@ -2,13 +2,16 @@ package com.cy.framework.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cy.framework.MainGame;
 
 public class StartScreen implements Screen {
@@ -48,13 +51,18 @@ public class StartScreen implements Screen {
 	@Override
 	public void show() {
 		// 初始化都在 这里
+		OrthographicCamera camera = new OrthographicCamera();
+		camera.setToOrtho(false, 480, 800);
+		camera.update();
 		batch = new SpriteBatch();
-		startStage = new Stage();
-
+		batch.setProjectionMatrix(camera.combined);
+		
+		startStage = new Stage(new FitViewport(480, 800));
+		
 		bgTexture = new Texture(Gdx.files.internal("data/bg.jpg"));
 		btn_StartGameTexture = new Texture(Gdx.files.internal("data/Enter.png"));
 		img_start = new Image(btn_StartGameTexture);
-
+		
 		img_start.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,

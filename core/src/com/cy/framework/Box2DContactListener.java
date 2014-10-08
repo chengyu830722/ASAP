@@ -16,7 +16,6 @@ import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
 
 public class Box2DContactListener implements ContactListener {
-	//开始接触，代表AAB，不代表一定会发生碰撞，应使用POSTSOLVE
 	@Override
 	public void beginContact(Contact contact) {
 	}
@@ -29,7 +28,8 @@ public class Box2DContactListener implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated method stub
+		//调用SetEnabled(false)方法将会关闭接触，这也就意味着正常的碰撞响应将会被跳过。你可以利用这一点暂时允许物体之间彼此穿透。
+		//contact.setEnabled(false);
 		Box2DUserData dataA = (Box2DUserData) contact.getFixtureA().getBody()
 				.getUserData();
 		Box2DUserData dataB = (Box2DUserData) contact.getFixtureB().getBody()
@@ -48,8 +48,9 @@ public class Box2DContactListener implements ContactListener {
 					{
 						Enemy temp = (Enemy) dataB.obj;
 						temp.sprite.setColor(0, 0, 1, 1);
+						temp.kill();
 						int index = GlobalVal.r.nextInt(3);
-						int z=3;
+						list[2].play(GlobalVal.SoundVol);
 					}
 		}
 		if ((dataA.classname != "Bullet") && (dataB.classname == "Bullet")) {
@@ -64,7 +65,8 @@ public class Box2DContactListener implements ContactListener {
 					Enemy temp = (Enemy) dataA.obj;
 					temp.sprite.setColor(0, 0, 1, 1);
 					int index = GlobalVal.r.nextInt(3);
-					int z=3;
+					temp.kill();
+					list[2].play(GlobalVal.SoundVol);
 				}
 				// Box2D 并不允许你在回调中改变物理世界，因为你可能会摧毁 Box2D 正在运算的对象!!如果要摧毁对象，见下。
 				// final Body toRemove =

@@ -37,6 +37,7 @@ public class GameWorld {
 
     // 世界脚本
     MyWorldScript script;
+	private Hero hero;
     
 	public GameWorld(MainGame mainGame) {
 		this.mainGame = mainGame;
@@ -58,6 +59,8 @@ public class GameWorld {
 		// 初始化BOX2D world
 		b2world = new World(new Vector2(0, -9.81f), true);
 		b2world.setContactListener(new Box2DContactListener());
+		hero = new Hero(0,200,80,80,this);
+		
 		// 初始化起始点
 		WorldFrames = 0;
 		Rock rock1 = new Rock(240, 100, 480, 20);
@@ -83,7 +86,7 @@ public class GameWorld {
 			temp.render1f(batch);
 		}
 		// 绘制hero
-		// pig.render1f(batch);
+		hero.render1f(batch);
 		batch.end();
 		// 调试代码
 		if (GlobalVal.DEBUG) {
@@ -103,6 +106,7 @@ public class GameWorld {
 					+ Gdx.app.getGraphics().getFramesPerSecond(), 10, 100, 300);
 			batch.end();
 		}
+		
 		
 	}
 
@@ -136,7 +140,8 @@ public class GameWorld {
 			}
 		}
 		// 更新主人公
-		// pig.update1f();
+		hero.update1f();
+		// 更新敌人
 		if ((WorldFrames % 10 == 0) && (WorldFrames < WorldFrames+600)) {
 			Enemy a = new Enemy(100, 800, 30, 30);
 			Enemy b = new Enemy(240, 800, 50, 50);
@@ -162,11 +167,12 @@ public class GameWorld {
 			// 变换到800*480下
 			float pointx = (int) (Gdx.input.getX() * factorx);
 			float pointy = 800 - (int) (Gdx.input.getY() * factory);
-			Bullet arrow = new Bullet(pointx, pointy, 80, 16);
-			arrow.attachBox2D(b2world);
-			arrow.body.setBullet(true);
-			arrow.body.setLinearVelocity(20, 0);
-			BulletList.add(arrow);
+			hero.flytoshoot(0, pointy);
+//			Bullet arrow = new Bullet(pointx,pointy, 40, 8);
+//			arrow.attachBox2D(b2world);
+//			arrow.body.setBullet(true);
+//			arrow.body.setLinearVelocity(30, 0);
+//			BulletList.add(arrow);
 		}
 	}
 

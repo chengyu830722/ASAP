@@ -60,6 +60,7 @@ public class Box2DContactListener implements ContactListener {
 						GlobalVal.manager.get("sound/sd3.mp3", Sound.class) };
 				Bullet bullet=(Bullet)dataB.obj;
 				float v=bullet.body.getLinearVelocity().len();
+				//V>20保证速度快的时候才能消灭敌人
 				if(v>20)
 				{
 					Enemy temp = (Enemy) dataA.obj;

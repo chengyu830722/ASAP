@@ -11,17 +11,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.cy.VisualEffect.VisualEffect;
 import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
+import com.cy.asap.EnergyBall;
 import com.cy.asap.Hero;
 import com.cy.asap.Rock;
 
 public class GameWorld {
 	// 主人公
 	public Hero pig;
-	// 狼
-	public ArrayList<Bullet> BulletList;
-	public ArrayList<Enemy> EnemyList;
+	// 各种列表
+	public ArrayList<Bullet> BulletList= new ArrayList<Bullet>();
+	public ArrayList<Enemy> EnemyList= new ArrayList<Enemy>();
+	public ArrayList<VisualEffect> VEList=new ArrayList<VisualEffect>();
+	public ArrayList<EnergyBall> EBList=new ArrayList<EnergyBall>();
 	// BOX2D World
 	public World b2world;
 	public Box2DDebugRenderer b2debugRenderer;
@@ -37,12 +41,10 @@ public class GameWorld {
 
     // 世界脚本
     MyWorldScript script;
-	private Hero hero;
+    public Hero hero;
     
 	public GameWorld(MainGame mainGame) {
 		this.mainGame = mainGame;
-		BulletList = new ArrayList<Bullet>();
-		EnemyList = new ArrayList<Enemy>();
 		// 初始世界摄像头
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 480, 800);
@@ -57,7 +59,8 @@ public class GameWorld {
 		box2dcamera.update();
 
 		// 初始化BOX2D world
-		b2world = new World(new Vector2(0, -9.81f), true);
+		//b2world = new World(new Vector2(0, -9.81f), true);
+		b2world = new World(new Vector2(0, -5.81f), true);
 		b2world.setContactListener(new Box2DContactListener());
 		hero = new Hero(0,200,80,80,this);
 		
@@ -73,7 +76,7 @@ public class GameWorld {
 
 	public void render1f() {
 		// 清屏
-		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
+		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
@@ -83,6 +86,14 @@ public class GameWorld {
 		}
 		// 绘制子弹
 		for (Bullet temp : BulletList) {
+			temp.render1f(batch);
+		}
+		// 绘制VE
+		for (VisualEffect temp : VEList) {
+			temp.render1f(batch);
+		}
+		// 绘制EB
+		for (EnergyBall temp : EBList) {
 			temp.render1f(batch);
 		}
 		// 绘制hero
@@ -114,19 +125,16 @@ public class GameWorld {
 	public void update1f() {
 		//用户输入
 		updateUserInput();
-		
 		//世界脚本更新
 		script.update1f();
-		
 		// 更新Enemy
-		// 1.更新子弹状态
 		for (Iterator<Enemy> it = EnemyList.iterator(); it.hasNext();) {
 			Enemy temp = it.next();
 			if (!temp.getAlive()) {
 				temp.detachBox2D(b2world);
 				it.remove();
 			} else {
-				temp.update1f(batch);
+				temp.update1f();
 			}
 		}
 		// 更新子弹
@@ -136,16 +144,35 @@ public class GameWorld {
 				temp.detachBox2D(b2world);
 				it.remove();
 			} else {
-				temp.update1f(batch);
+				temp.update1f();
+			}
+		}
+		// 更新VE
+		for (Iterator<VisualEffect> it = VEList.iterator(); it.hasNext();) {
+			VisualEffect temp = it.next();
+			if (!temp.getAlive()) {
+				it.remove();
+			} else {
+				temp.update1f();
+			}
+		}
+		// 更新EB
+		for (Iterator<EnergyBall> it = EBList.iterator(); it.hasNext();) {
+			EnergyBall temp = it.next();
+			if (!temp.getAlive()) {
+				it.remove();
+			} else {
+				temp.update1f();
 			}
 		}
 		// 更新主人公
 		hero.update1f();
-		// 更新敌人
-		if ((WorldFrames % 10 == 0) && (WorldFrames < WorldFrames+600)) {
-			Enemy a = new Enemy(100, 800, 30, 30);
-			Enemy b = new Enemy(240, 800, 50, 50);
-			Enemy c = new Enemy(340, 800, 30, 30);
+		
+		// 刷新敌人
+		if ((WorldFrames % 40 == 0) && (WorldFrames < WorldFrames+600)) {
+			Enemy a = new Enemy(100, 800, 30, 30,this);
+			Enemy b = new Enemy(240, 850, 50, 50,this);
+			Enemy c = new Enemy(340, 930, 30, 30,this);
 			EnemyList.add(a);
 			EnemyList.add(b);
 			EnemyList.add(c);
@@ -165,7 +192,7 @@ public class GameWorld {
 			float factorx = 480.0f / Gdx.graphics.getWidth();
 			float factory = 800.0f / Gdx.graphics.getHeight();
 			// 变换到800*480下
-			float pointx = (int) (Gdx.input.getX() * factorx);
+			//float pointx = (int) (Gdx.input.getX() * factorx);
 			float pointy = 800 - (int) (Gdx.input.getY() * factory);
 			hero.flytoshoot(0, pointy);
 //			Bullet arrow = new Bullet(pointx,pointy, 40, 8);
@@ -181,9 +208,9 @@ public class GameWorld {
 	}
 
 	//产生敌人
-	public void born(String param, float parseFloat, float parseFloat2,
+	public void bornEnemy(String param, float parseFloat, float parseFloat2,
 			float parseFloat3) {
-		Enemy a = new Enemy(100, 800, 30, 30);
+		Enemy a = new Enemy(100, 800, 30, 30,this);
 		a.sprite.setColor(1, 0, 0, 1);
 		EnemyList.add(a);
 		a.attachBox2D(b2world);

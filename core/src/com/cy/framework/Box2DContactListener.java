@@ -1,17 +1,10 @@
 package com.cy.framework;
 
-import java.util.Random;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cy.asap.Bullet;
 import com.cy.asap.Enemy;
 
@@ -49,7 +42,6 @@ public class Box2DContactListener implements ContactListener {
 						Enemy temp = (Enemy) dataB.obj;
 						temp.sprite.setColor(0, 0, 1, 1);
 						temp.kill();
-						int index = GlobalVal.r.nextInt(3);
 						list[2].play(GlobalVal.SoundVol);
 					}
 		}
@@ -65,7 +57,6 @@ public class Box2DContactListener implements ContactListener {
 				{
 					Enemy temp = (Enemy) dataA.obj;
 					temp.sprite.setColor(0, 0, 1, 1);
-					int index = GlobalVal.r.nextInt(3);
 					temp.kill();
 					list[2].play(GlobalVal.SoundVol);
 				}

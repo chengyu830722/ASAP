@@ -1,6 +1,5 @@
 package com.cy.asap;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -26,7 +25,11 @@ public class Hero {
 	float x;float y;float width;float height;
 	float dstX;float dstY;
 	float moveframes;
+	public boolean alive = true;
 	
+	//能量系统
+	int curEnergyType=0;
+	int curEnergyLv=0;
 	public Hero(float x,float y ,float width ,float height,GameWorld world) {
 		this.x=x;
 		this.y=y;
@@ -49,7 +52,7 @@ public class Hero {
 			TextureRegion region = new TextureRegion(texture);
 			shootFrames[i]=region;
 		}
-		shootAnimation = new Animation(0.01f, shootFrames);
+		shootAnimation = new Animation(0.1f, shootFrames);
 		flyAnimation.setPlayMode(PlayMode.LOOP);
 	}
 
@@ -93,8 +96,8 @@ public class Hero {
 	{
 		//设定移动的状态，和目标位置，移动帧数。
 		status=enumStatus.flytoshoot;
-		dstX=X;
-		dstY=Y;
+		dstX=0;
+		dstY=Y-height/2;
 		//20帧内移动到目标地点。
 		moveframes=10;
 	}
@@ -105,12 +108,6 @@ public class Hero {
 		case shoot:
 			if (shootAnimation.isAnimationFinished(stateTime)) {
 				status=enumStatus.fly;
-				//射出
-				Bullet arrow = new Bullet(x, y, 40, 8);
-				arrow.attachBox2D(gameWorld.b2world);
-				arrow.body.setBullet(true);
-				arrow.body.setLinearVelocity(30, 0);
-				gameWorld.BulletList.add(arrow);
 			}
 			break;
 		case flytoshoot:
@@ -119,9 +116,43 @@ public class Hero {
 			moveframes--;
 			if (moveframes==0) {
 				status=enumStatus.shoot;
+				//移动到地点先射出箭，再播放攻击动画
+				Bullet arrow = new Bullet(x+width/2, y+height/2, 40, 8);
+				arrow.attachBox2D(gameWorld.b2world);
+				arrow.body.setBullet(true);
+				arrow.body.setLinearVelocity(30, 0);
+				gameWorld.BulletList.add(arrow);
 			}
 		default:
 			break;
 		}
+	}
+
+	//吸收能量,
+	public void absorbEnergyBall(int type) {
+		switch (type) {
+		case 1:
+			if (alive) {
+				
+			}
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public float getCenterX()
+	{
+		return x+width/2;
+	}
+	public float getCenterY()
+	{
+		return y+height/2;
 	}
 }

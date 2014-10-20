@@ -180,7 +180,7 @@ public class MyWorldScript {
 			String px = readattribute("px");
 			String py = readattribute("py");
 			String direction = readattribute("direction");
-			gWorld.born(param, Float.parseFloat(px), Float.parseFloat(py),
+			gWorld.bornEnemy(param, Float.parseFloat(px), Float.parseFloat(py),
 					Float.parseFloat(direction));
 
 		}

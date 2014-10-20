@@ -24,7 +24,7 @@ public class Bullet {
 	private float factor = 0.7f;
 	private float rotation;
 	public Body body;
-	private boolean alive = true;;
+	private boolean alive = true;
 
 	
 	public Bullet(float x, float y, float width, float height) {
@@ -50,7 +50,7 @@ public class Bullet {
 		sprite.draw(batch);
 	}
 
-	public void update1f(SpriteBatch batch) {
+	public void update1f() {
 		alive = checkInBound();
 	}
 

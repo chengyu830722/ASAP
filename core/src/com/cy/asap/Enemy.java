@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.cy.framework.Box2DUserData;
+import com.cy.framework.GameWorld;
 import com.cy.framework.GlobalVal;
 
 public class Enemy {
@@ -24,15 +25,17 @@ public class Enemy {
 	private float factor = 0.7f;
 	private float rotation;
 	private Body body;
-	public boolean alive = true;;
+	public boolean alive = true;
+	public GameWorld gameWorld;
 	//状态
 	enum Status{NORMAL,AFTERHIT};
 	Status status=Status.NORMAL;
-	public Enemy(float x, float y, float width, float height) {
+	public Enemy(float x, float y, float width, float height,GameWorld gameWorld) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.gameWorld=gameWorld;
 		rotation = 0;
 		Texture tex = GlobalVal.manager.get("data/xigua.png", Texture.class);
 		sprite = new Sprite(tex);
@@ -51,14 +54,9 @@ public class Enemy {
 		sprite.draw(batch);
 	}
 
-	public void update1f(SpriteBatch batch) {
+	public void update1f() {
 		//超出世界边界，死亡
 		alive = checkInBound();
-		//击中后
-		if (status==Status.AFTERHIT) {
-			alive=false;
-		}
-		
 	}
 
 	public boolean getAlive() {
@@ -128,8 +126,13 @@ public class Enemy {
 	}
 
 	public void kill() {
-		// TODO Auto-generated method stub
 		alive=false;
+		//随机生成能量球
+		int type=GlobalVal.r.nextInt(3)+1;
+		if (type>=1&&type<=3) {
+			EnergyBall ball=new EnergyBall(x, y, 20, 20, type, gameWorld);
+			gameWorld.EBList.add(ball);
+		}
 	}
 
 }

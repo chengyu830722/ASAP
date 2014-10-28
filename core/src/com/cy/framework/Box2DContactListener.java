@@ -15,8 +15,6 @@ public class Box2DContactListener implements ContactListener {
 
 	@Override
 	public void endContact(Contact contact) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

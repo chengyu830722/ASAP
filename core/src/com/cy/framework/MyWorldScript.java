@@ -62,14 +62,12 @@ public class MyWorldScript {
 			node = reader.parse(aFileHandle);
 			nodesum = node.getChildCount();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		currentElement = node.getChild(0);
 		try {
 			readnode();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

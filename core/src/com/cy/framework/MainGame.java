@@ -85,6 +85,10 @@ public class MainGame extends Game {
 		GlobalVal.manager.load("data/SelStageBtn.png", Texture.class, param); 
 		GlobalVal.manager.load("data/SelStageBtn2.png", Texture.class, param);
 		
+		GlobalVal.manager.load("data/WindowBG.png", Texture.class, param); //弹出框
+		GlobalVal.manager.load("data/Cancel.png", Texture.class, param); //弹出框 取消
+		GlobalVal.manager.load("data/OK.png", Texture.class, param); //弹出框 确定
+		
 		GlobalVal.manager.load("data/hero/hero_0.png", Texture.class, param);
 		GlobalVal.manager.load("data/hero/hero_1.png", Texture.class, param);
 		GlobalVal.manager.load("data/hero/hero_2.png", Texture.class, param);
@@ -94,6 +98,8 @@ public class MainGame extends Game {
 		GlobalVal.manager.load("sound/sd1.mp3", Sound.class);
 		GlobalVal.manager.load("sound/sd2.mp3", Sound.class);
 		GlobalVal.manager.load("sound/sd3.mp3", Sound.class);
+		
+		
 		GlobalVal.manager.finishLoading();
 		
 		//加载texpacker

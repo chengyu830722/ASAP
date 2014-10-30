@@ -1,25 +1,38 @@
 package com.cy.framework.screen;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cy.framework.GlobalVal;
 import com.cy.framework.MainGame;
 
-public class SelectStageScreen implements Screen, GestureListener {
+public class SelectStageScreen implements Screen, GestureListener ,ICallBack{
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
+	
+	
+
+	
+	
+	private Window dialog;  //对话框
 	//
 	float speedx;
 	float speedy;
@@ -55,10 +68,18 @@ public class SelectStageScreen implements Screen, GestureListener {
 
 	@Override
 	public void show() {
+		
+	
+		
+	
+
 		stage = new Stage(new FitViewport(480, 800));
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
 		stage.addActor(bgimage);
+		
+		
+		
 		for (int i = 0; i < GlobalVal.stagelist.length; i++) {
 			int x = GlobalVal.stagelist[i].x;
 			int y = GlobalVal.stagelist[i].y;
@@ -68,11 +89,21 @@ public class SelectStageScreen implements Screen, GestureListener {
 			TextureRegion region1 = new TextureRegion(tex1);
 			TextureRegion region2 = new TextureRegion(tex2);
 			SelStageButton temp = new SelStageButton(new TextureRegionDrawable(region1),new TextureRegionDrawable(region1),new TextureRegionDrawable(region2));
-			temp.setStageInfo(x, y, no, game);
+			temp.setStageInfo(x, y, no, this);
+			
+			
 			stage.addActor(temp);
 		}
+		
+		
+
+		
+		
+		
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(new GestureDetector(this)); // 设置手势监听
+		multiplexer.removeProcessor(new GestureDetector(this));
+		
 		multiplexer.addProcessor(stage); // 设置点击监听
 		Gdx.input.setInputProcessor(multiplexer);
 	}
@@ -150,7 +181,6 @@ public class SelectStageScreen implements Screen, GestureListener {
 
 	private void moveCamera(float deltaX, float deltaY) {
 		stage.getViewport().getCamera().position.x -= deltaX;
-		;
 		stage.getViewport().getCamera().position.y += deltaY;
 		if (stage.getViewport().getCamera().position.x < 240) {
 			stage.getViewport().getCamera().position.x = 240;
@@ -168,5 +198,37 @@ public class SelectStageScreen implements Screen, GestureListener {
 			stage.getViewport().getCamera().position.y = bgimage
 					.getHeight() - 400;
 		}
+	}
+
+	@Override
+	
+	//实现选关方法回调
+	public void doSelectStage(String StageNo) {
+
+		
+		//BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt", BitmapFont.class);
+		BitmapFont bitmapFont = new BitmapFont();
+		// TextureRegion txr= new TextureRegion(GlobalVal.manager.get("data/SelStageBtn.png",Texture.class), 512, 256);
+		//TextureRegion txr=new TextureRegion(new Texture(Gdx.files.internal("WindowBG.png")), 512, 256);
+		
+		 
+
+		 TextureRegion txr= new TextureRegion(GlobalVal.manager.get("data/WindowBG.png",Texture.class),310, 800);
+		 TextureRegionDrawable txrregion = new TextureRegionDrawable(txr);
+			
+		 dialog=new Window("dialog",new Window.WindowStyle(bitmapFont, new Color(),txrregion));
+
+         //Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		//dialog =new Window("你选择了第"+ StageNo+"关", new WindowStyle().stageBackground());
+		
+		 dialog.setWidth(txr.getRegionWidth());
+		 dialog.setHeight(txr.getRegionHeight());
+		 
+		//为了让图片保持居中
+        dialog.setX(0);
+        dialog.setY(0);
+
+		stage.addActor(dialog);
+		
 	}
 }

@@ -95,6 +95,13 @@ public class MainGame extends Game {
 		GlobalVal.manager.load("data/hero/hero_3.png", Texture.class, param);
 		
 		GlobalVal.manager.load("data/dot.png", Texture.class, param);
+		
+		GlobalVal.manager.load("data/hub/bsxg1.png", Texture.class, param);
+		GlobalVal.manager.load("data/hub/bsxg2.png", Texture.class, param);
+		GlobalVal.manager.load("data/hub/bsxg3.png", Texture.class, param);
+		GlobalVal.manager.load("data/hub/bsxg4.png", Texture.class, param);
+		GlobalVal.manager.load("data/hub/bsxg5.png", Texture.class, param);
+		
 		GlobalVal.manager.load("sound/sd1.mp3", Sound.class);
 		GlobalVal.manager.load("sound/sd2.mp3", Sound.class);
 		GlobalVal.manager.load("sound/sd3.mp3", Sound.class);

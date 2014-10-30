@@ -30,4 +30,6 @@ public class GlobalVal {
 	//音量
 	public static float SoundVol = 0.2f;
 	public static float MusicVol=0.5f;
+	
+	
 }

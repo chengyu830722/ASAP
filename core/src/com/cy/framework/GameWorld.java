@@ -17,6 +17,7 @@ import com.cy.asap.Enemy;
 import com.cy.asap.EnergyBall;
 import com.cy.asap.Hero;
 import com.cy.asap.Rock;
+import com.cy.framework.MyHub.HubStatus;
 
 public class GameWorld {
 	// 主人公
@@ -42,6 +43,8 @@ public class GameWorld {
     // 世界脚本
     MyWorldScript script;
     public Hero hero;
+    //hub
+    public MyHub hub;
     
 	public GameWorld(MainGame mainGame) {
 		this.mainGame = mainGame;
@@ -72,9 +75,12 @@ public class GameWorld {
 		script = new MyWorldScript(this);
 		//开始脚本
 		script.beginscript("stage1.xml");
+		//初始化HUB
+		hub=new MyHub();
 	}
 
 	public void render1f() {
+
 		// 清屏
 		Gdx.gl.glClearColor(0.8f, 0.8f, 0.8f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -98,7 +104,10 @@ public class GameWorld {
 		}
 		// 绘制hero
 		hero.render1f(batch);
+		//hub
+		hub.render1f(batch);
 		batch.end();
+		
 		// 调试代码
 		if (GlobalVal.DEBUG) {
 			b2debugRenderer.render(b2world, box2dcamera.combined);
@@ -111,10 +120,10 @@ public class GameWorld {
 					batch,
 					"enemy数量:" + EnemyList.size() + " BodySize"
 							+ b2world.getBodyCount(), 10, 40, 480);
-			bitmapFont.drawWrapped(batch, "frame:" + WorldFrames, 10,
-					70, 300);
-			bitmapFont.drawWrapped(batch, "fps:"
-					+ Gdx.app.getGraphics().getFramesPerSecond(), 10, 100, 300);
+//			bitmapFont.drawWrapped(batch, "frame:" + WorldFrames, 10,70, 300);
+//			bitmapFont.drawWrapped(batch, "fps:"+ Gdx.app.getGraphics().getFramesPerSecond(), 10, 100, 300);
+			bitmapFont.drawWrapped(batch, "type:" + hero.curEnergyType, 10,70, 300);
+			bitmapFont.drawWrapped(batch, "lv:" + hero.curEnergyLv, 10,100, 300);
 			batch.end();
 		}
 		
@@ -167,7 +176,8 @@ public class GameWorld {
 		}
 		// 更新主人公
 		hero.update1f();
-		
+		// 更新hub
+		hub.update1f();
 		// 刷新敌人
 		if ((WorldFrames % 40 == 0) && (WorldFrames < WorldFrames+600)) {
 			Enemy a = new Enemy(100, 800, 30, 30,this);

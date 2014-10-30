@@ -28,8 +28,8 @@ public class Hero {
 	public boolean alive = true;
 	
 	//能量系统
-	int curEnergyType=0;
-	int curEnergyLv=0;
+	public int curEnergyType=0;
+	public int curEnergyLv=0;
 	public Hero(float x,float y ,float width ,float height,GameWorld world) {
 		this.x=x;
 		this.y=y;
@@ -128,22 +128,30 @@ public class Hero {
 		}
 	}
 
+	public void raiseEnergyLV(int type)
+	{
+		curEnergyLv++;
+	}
 	//吸收能量,
 	public void absorbEnergyBall(int type) {
-		switch (type) {
-		case 1:
-			if (alive) {
-				
+		if (type==curEnergyType) {
+			if (curEnergyLv==3) {
+				//播放一个能量MAX的动画
 			}
-			break;
-		case 2:
-			
-			break;
-		case 3:
-			
-			break;
-		default:
-			break;
+			else {
+				raiseEnergyLV(type);
+				gameWorld.hub.setEnergyStatus(curEnergyLv, curEnergyLv);
+				gameWorld.hub.playIgnition(curEnergyLv);
+			}
+		}
+		else {
+			//能量少于MAX时，能量类型会转变
+			if (curEnergyLv<3) {
+				curEnergyType=type;
+				curEnergyLv=0;
+				raiseEnergyLV(type);
+				gameWorld.hub.setEnergyStatus(curEnergyLv, curEnergyType);
+			}
 		}
 	}
 	

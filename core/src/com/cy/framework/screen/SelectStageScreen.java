@@ -1,6 +1,5 @@
 package com.cy.framework.screen;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -23,16 +22,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cy.framework.GlobalVal;
 import com.cy.framework.MainGame;
 
-public class SelectStageScreen implements Screen, GestureListener ,ICallBack{
+public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
-	
-	
-
-	
-	
-	private Window dialog;  //对话框
+	private Window dialog; // 对话框
 	//
 	float speedx;
 	float speedy;
@@ -68,42 +62,31 @@ public class SelectStageScreen implements Screen, GestureListener ,ICallBack{
 
 	@Override
 	public void show() {
-		
-	
-		
-	
-
 		stage = new Stage(new FitViewport(480, 800));
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
 		stage.addActor(bgimage);
-		
-		
-		
 		for (int i = 0; i < GlobalVal.stagelist.length; i++) {
 			int x = GlobalVal.stagelist[i].x;
 			int y = GlobalVal.stagelist[i].y;
 			int no = GlobalVal.stagelist[i].stageno;
-			Texture tex1=GlobalVal.manager.get("data/SelStageBtn.png",Texture.class);
-			Texture tex2=GlobalVal.manager.get("data/SelStageBtn2.png",Texture.class);
+			Texture tex1 = GlobalVal.manager.get("data/SelStageBtn.png",
+					Texture.class);
+			Texture tex2 = GlobalVal.manager.get("data/SelStageBtn2.png",
+					Texture.class);
 			TextureRegion region1 = new TextureRegion(tex1);
 			TextureRegion region2 = new TextureRegion(tex2);
-			SelStageButton temp = new SelStageButton(new TextureRegionDrawable(region1),new TextureRegionDrawable(region1),new TextureRegionDrawable(region2));
+			SelStageButton temp = new SelStageButton(new TextureRegionDrawable(
+					region1), new TextureRegionDrawable(region1),
+					new TextureRegionDrawable(region2));
 			temp.setStageInfo(x, y, no, this);
-			
-			
 			stage.addActor(temp);
 		}
-		
-		
 
-		
-		
-		
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(new GestureDetector(this)); // 设置手势监听
 		multiplexer.removeProcessor(new GestureDetector(this));
-		
+
 		multiplexer.addProcessor(stage); // 设置点击监听
 		Gdx.input.setInputProcessor(multiplexer);
 	}
@@ -148,8 +131,8 @@ public class SelectStageScreen implements Screen, GestureListener ,ICallBack{
 
 	@Override
 	public boolean fling(float velocityX, float velocityY, int button) {
-		speedx = velocityX/100.0f;
-		speedy = velocityY/100.0f;
+		speedx = velocityX / 100.0f;
+		speedy = velocityY / 100.0f;
 		return false;
 	}
 
@@ -185,50 +168,49 @@ public class SelectStageScreen implements Screen, GestureListener ,ICallBack{
 		if (stage.getViewport().getCamera().position.x < 240) {
 			stage.getViewport().getCamera().position.x = 240;
 		}
-		if (stage.getViewport().getCamera().position.x > bgimage
-				.getWidth() - 240) {
-			stage.getViewport().getCamera().position.x = bgimage
-					.getWidth() - 240;
+		if (stage.getViewport().getCamera().position.x > bgimage.getWidth() - 240) {
+			stage.getViewport().getCamera().position.x = bgimage.getWidth() - 240;
 		}
 		if (stage.getViewport().getCamera().position.y < 400) {
 			stage.getViewport().getCamera().position.y = 400;
 		}
-		if (stage.getViewport().getCamera().position.y > bgimage
-				.getHeight() - 400) {
-			stage.getViewport().getCamera().position.y = bgimage
-					.getHeight() - 400;
+		if (stage.getViewport().getCamera().position.y > bgimage.getHeight() - 400) {
+			stage.getViewport().getCamera().position.y = bgimage.getHeight() - 400;
 		}
 	}
 
 	@Override
-	
-	//实现选关方法回调
+	// 实现选关方法回调
 	public void doSelectStage(String StageNo) {
 
-		
-		//BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt", BitmapFont.class);
+		// BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt",
+		// BitmapFont.class);
 		BitmapFont bitmapFont = new BitmapFont();
-		// TextureRegion txr= new TextureRegion(GlobalVal.manager.get("data/SelStageBtn.png",Texture.class), 512, 256);
-		//TextureRegion txr=new TextureRegion(new Texture(Gdx.files.internal("WindowBG.png")), 512, 256);
-		
-		 
+		// TextureRegion txr= new
+		// TextureRegion(GlobalVal.manager.get("data/SelStageBtn.png",Texture.class),
+		// 512, 256);
+		// TextureRegion txr=new TextureRegion(new
+		// Texture(Gdx.files.internal("WindowBG.png")), 512, 256);
 
-		 TextureRegion txr= new TextureRegion(GlobalVal.manager.get("data/WindowBG.png",Texture.class),310, 800);
-		 TextureRegionDrawable txrregion = new TextureRegionDrawable(txr);
-			
-		 dialog=new Window("dialog",new Window.WindowStyle(bitmapFont, new Color(),txrregion));
+		TextureRegion txr = new TextureRegion(GlobalVal.manager.get(
+				"data/WindowBG.png", Texture.class));
+		TextureRegionDrawable txrregion = new TextureRegionDrawable(txr);
 
-         //Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-		//dialog =new Window("你选择了第"+ StageNo+"关", new WindowStyle().stageBackground());
-		
-		 dialog.setWidth(txr.getRegionWidth());
-		 dialog.setHeight(txr.getRegionHeight());
-		 
-		//为了让图片保持居中
-        dialog.setX(0);
-        dialog.setY(0);
+		dialog = new Window("dialog", new Window.WindowStyle(bitmapFont,
+				new Color(), txrregion));
+
+		// Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+		// dialog =new Window("你选择了第"+ StageNo+"关", new
+		// WindowStyle().stageBackground());
+
+		// 为了让图片保持居中
+		float width=200;
+		float height=100;
+		dialog.setWidth(width);
+		dialog.setHeight(height);
+		dialog.setPosition(GlobalVal.WIDTH/2-width/2, GlobalVal.HEIGHT/2-height/2);
 
 		stage.addActor(dialog);
-		
+
 	}
 }

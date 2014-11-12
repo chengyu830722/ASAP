@@ -47,6 +47,7 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	//
 	float speedx;
 	float speedy;
+	private GestureDetector detector;
 
 	public SelectStageScreen(MainGame mainGame) {
 		this.game = mainGame;
@@ -80,6 +81,7 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(480, 800));
+		//todo:bgimage增加手势监听的功能。
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
 		stage.addActor(bgimage);
@@ -100,10 +102,11 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 			stage.addActor(temp);
 		}
 
-	
-		multiplexer.addProcessor(new GestureDetector(this)); // 设置手势监听
+		detector = new GestureDetector(this);
+		multiplexer.addProcessor(detector); // 设置手势监听
 		multiplexer.addProcessor(stage); // 设置点击监听
 		Gdx.input.setInputProcessor(multiplexer);
+
 	}
 
 	@Override
@@ -140,7 +143,6 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	@Override
 	public boolean longPress(float x, float y) {
 		// TODO Auto-generated method stub
-
 		return false;
 	}
 
@@ -214,17 +216,18 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 
 		float width = 400;
 		float height = 350;
+		//todo:设置位置
 		dialog.setWidth(width);
 		dialog.setHeight(height);
-		
+		dialog.setKeepWithinStage(false);
 		// 为了让Window保持居中
 	/*  dialog.setPosition(GlobalVal.WIDTH / 2 - width / 2  , GlobalVal.HEIGHT
 				/ 2 - height / 2);*/
-		
-		dialog.setPosition(700 ,200);
+		float x=stage.getViewport().getCamera().position.x-480+GlobalVal.WIDTH/2+width/2;
+		float y=stage.getViewport().getCamera().position.y-800+GlobalVal.HEIGHT/2+height/2;
+		dialog.setPosition(x ,y);
 
 		//dialog.setModal(true); // 模态窗口？
-		
 	    //一个图片  一段文字
 		lbl_Tilte =new Label("你选择了第"+ StageNo+"关", new LabelStyle(bitmapFont,Color.RED));
 		infoImage = new Image( new Texture(Gdx.files.internal("badlogic.jpg")));
@@ -257,23 +260,23 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 					int pointer, int button) {
 				
 				dialog.remove();  //干掉 这window
-				
+				multiplexer.addProcessor(detector); // 设置手势监听
 				
 				return false;
 			}
 		});
 		
-		dialog.add(lbl_Tilte).expand().top().padLeft(50);
-	    dialog.row();
-		dialog.add(infoImage).padLeft(60);
-		dialog.row();
-		
-		dialog.add(btn_OK).padLeft(0);  //添加OK 按钮
-		dialog.add(btn_Cancel).padLeft(0);//添加Cancel按钮
-		dialog.pack();
+//		dialog.add(lbl_Tilte).expand().top().padLeft(50);
+//	    dialog.row();
+//		dialog.add(infoImage).padLeft(60);
+//		dialog.row();
+//		
+//		dialog.add(btn_OK).padLeft(0);  //添加OK 按钮
+//		dialog.add(btn_Cancel).padLeft(0);//添加Cancel按钮
+//		dialog.pack();
 		
 		stage.addActor(dialog);
-		
+		multiplexer.removeProcessor(detector);
 		
 		
 	}

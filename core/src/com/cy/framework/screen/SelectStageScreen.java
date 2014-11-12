@@ -12,10 +12,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -26,7 +33,17 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
+	
+	
 	private Window dialog; // 对话框
+	private Button btn_OK;  //对话框 确定按钮
+	private Button btn_Cancel;  //对话框 确定按钮
+	private Label  lbl_Tilte;  //关卡介绍 标题
+	private  Image infoImage; //填坑用
+	
+	
+	InputMultiplexer multiplexer = new InputMultiplexer();
+	
 	//
 	float speedx;
 	float speedy;
@@ -83,10 +100,8 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 			stage.addActor(temp);
 		}
 
-		InputMultiplexer multiplexer = new InputMultiplexer();
+	
 		multiplexer.addProcessor(new GestureDetector(this)); // 设置手势监听
-		multiplexer.removeProcessor(new GestureDetector(this));
-
 		multiplexer.addProcessor(stage); // 设置点击监听
 		Gdx.input.setInputProcessor(multiplexer);
 	}
@@ -183,14 +198,8 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	// 实现选关方法回调
 	public void doSelectStage(String StageNo) {
 
-		// BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt",
-		// BitmapFont.class);
-		BitmapFont bitmapFont = new BitmapFont();
-		// TextureRegion txr= new
-		// TextureRegion(GlobalVal.manager.get("data/SelStageBtn.png",Texture.class),
-		// 512, 256);
-		// TextureRegion txr=new TextureRegion(new
-		// Texture(Gdx.files.internal("WindowBG.png")), 512, 256);
+		BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt",
+		BitmapFont.class);
 
 		TextureRegion txr = new TextureRegion(GlobalVal.manager.get(
 				"data/WindowBG.png", Texture.class));
@@ -203,14 +212,69 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 		// dialog =new Window("你选择了第"+ StageNo+"关", new
 		// WindowStyle().stageBackground());
 
-		// 为了让图片保持居中
-		float width=200;
-		float height=100;
+		float width = 400;
+		float height = 350;
 		dialog.setWidth(width);
 		dialog.setHeight(height);
-		dialog.setPosition(GlobalVal.WIDTH/2-width/2, GlobalVal.HEIGHT/2-height/2);
+		
+		// 为了让Window保持居中
+	/*  dialog.setPosition(GlobalVal.WIDTH / 2 - width / 2  , GlobalVal.HEIGHT
+				/ 2 - height / 2);*/
+		
+		dialog.setPosition(700 ,200);
 
+		//dialog.setModal(true); // 模态窗口？
+		
+	    //一个图片  一段文字
+		lbl_Tilte =new Label("你选择了第"+ StageNo+"关", new LabelStyle(bitmapFont,Color.RED));
+		infoImage = new Image( new Texture(Gdx.files.internal("badlogic.jpg")));
+
+		Texture texOK = GlobalVal.manager.get("data/OK.png",
+				Texture.class);
+		Texture texCancel = GlobalVal.manager.get("data/Cancel.png",
+				Texture.class);
+		
+		TextureRegion regionOK = new TextureRegion(texOK);
+		TextureRegion regioCancel = new TextureRegion(texCancel);
+		
+		btn_OK = new Button(new TextureRegionDrawable(regionOK));
+		btn_Cancel = new Button(new TextureRegionDrawable(regioCancel));
+		
+		btn_OK.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				game.setScreen(game.dialogscreen);  //开始游戏 对话框
+				return false;
+			}
+		});
+		
+		
+		btn_Cancel.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				
+				dialog.remove();  //干掉 这window
+				
+				
+				return false;
+			}
+		});
+		
+		dialog.add(lbl_Tilte).expand().top().padLeft(50);
+	    dialog.row();
+		dialog.add(infoImage).padLeft(60);
+		dialog.row();
+		
+		dialog.add(btn_OK).padLeft(0);  //添加OK 按钮
+		dialog.add(btn_Cancel).padLeft(0);//添加Cancel按钮
+		dialog.pack();
+		
 		stage.addActor(dialog);
-
+		
+		
+		
 	}
 }

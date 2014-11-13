@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -33,17 +34,15 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
-	
-	
+
 	private Window dialog; // 对话框
-	private Button btn_OK;  //对话框 确定按钮
-	private Button btn_Cancel;  //对话框 确定按钮
-	private Label  lbl_Tilte;  //关卡介绍 标题
-	private  Image infoImage; //填坑用
-	
-	
+	private Button btn_OK; // 对话框 确定按钮
+	private Button btn_Cancel; // 对话框 确定按钮
+	private Label lbl_Tilte; // 关卡介绍 标题
+	private Image infoImage; // 填坑用
+
 	InputMultiplexer multiplexer = new InputMultiplexer();
-	
+
 	//
 	float speedx;
 	float speedy;
@@ -81,7 +80,7 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(480, 800));
-		//todo:bgimage增加手势监听的功能。
+		// todo:bgimage增加手势监听的功能。
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
 		stage.addActor(bgimage);
@@ -199,85 +198,69 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	@Override
 	// 实现选关方法回调
 	public void doSelectStage(String StageNo) {
-
 		BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt",
-		BitmapFont.class);
-
+				BitmapFont.class);
 		TextureRegion txr = new TextureRegion(GlobalVal.manager.get(
 				"data/WindowBG.png", Texture.class));
 		TextureRegionDrawable txrregion = new TextureRegionDrawable(txr);
-
 		dialog = new Window("dialog", new Window.WindowStyle(bitmapFont,
 				new Color(), txrregion));
-
 		// Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 		// dialog =new Window("你选择了第"+ StageNo+"关", new
 		// WindowStyle().stageBackground());
 
 		float width = 400;
 		float height = 350;
-		//todo:设置位置
+		// todo:设置位置 √
 		dialog.setWidth(width);
 		dialog.setHeight(height);
 		dialog.setKeepWithinStage(false);
 		// 为了让Window保持居中
-	/*  dialog.setPosition(GlobalVal.WIDTH / 2 - width / 2  , GlobalVal.HEIGHT
-				/ 2 - height / 2);*/
-		float x=stage.getViewport().getCamera().position.x-480+GlobalVal.WIDTH/2+width/2;
-		float y=stage.getViewport().getCamera().position.y-800+GlobalVal.HEIGHT/2+height/2;
-		dialog.setPosition(x ,y);
+		Vector3 camerapos = stage.getViewport().getCamera().position;
+		float x = camerapos.x - width / 2;
+		float y = camerapos.y - height / 2;
+		dialog.setPosition(x, y);
 
-		//dialog.setModal(true); // 模态窗口？
-	    //一个图片  一段文字
-		lbl_Tilte =new Label("你选择了第"+ StageNo+"关", new LabelStyle(bitmapFont,Color.RED));
-		infoImage = new Image( new Texture(Gdx.files.internal("badlogic.jpg")));
-
-		Texture texOK = GlobalVal.manager.get("data/OK.png",
-				Texture.class);
+		// dialog.setModal(true);
+		// 一个图片 一段文字
+		lbl_Tilte = new Label("你选择了第" + StageNo + "关", new LabelStyle(
+				bitmapFont, Color.RED));
+		infoImage = new Image(new Texture(Gdx.files.internal("badlogic.jpg")));
+		Texture texOK = GlobalVal.manager.get("data/OK.png", Texture.class);
 		Texture texCancel = GlobalVal.manager.get("data/Cancel.png",
 				Texture.class);
-		
 		TextureRegion regionOK = new TextureRegion(texOK);
 		TextureRegion regioCancel = new TextureRegion(texCancel);
-		
 		btn_OK = new Button(new TextureRegionDrawable(regionOK));
 		btn_Cancel = new Button(new TextureRegionDrawable(regioCancel));
-		
 		btn_OK.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-
-				game.setScreen(game.dialogscreen);  //开始游戏 对话框
+				game.setScreen(game.dialogscreen); // 开始游戏 对话框
 				return false;
 			}
 		});
-		
-		
 		btn_Cancel.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				
-				dialog.remove();  //干掉 这window
+
+				dialog.remove(); // 干掉 这window
 				multiplexer.addProcessor(detector); // 设置手势监听
-				
+
 				return false;
 			}
 		});
-		
-//		dialog.add(lbl_Tilte).expand().top().padLeft(50);
-//	    dialog.row();
-//		dialog.add(infoImage).padLeft(60);
-//		dialog.row();
-//		
-//		dialog.add(btn_OK).padLeft(0);  //添加OK 按钮
-//		dialog.add(btn_Cancel).padLeft(0);//添加Cancel按钮
-//		dialog.pack();
-		
+
+		dialog.add(lbl_Tilte).expand().top().padLeft(50);
+		dialog.row();
+		dialog.add(infoImage).padLeft(60);
+		dialog.row();
+		dialog.add(btn_OK).padLeft(0); // 添加OK 按钮
+		dialog.add(btn_Cancel).padLeft(0);// 添加Cancel按钮
+		dialog.pack();
 		stage.addActor(dialog);
 		multiplexer.removeProcessor(detector);
-		
-		
 	}
 }

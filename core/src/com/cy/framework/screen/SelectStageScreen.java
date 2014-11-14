@@ -25,12 +25,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cy.framework.GlobalVal;
 import com.cy.framework.MainGame;
 
-public class SelectStageScreen implements Screen, GestureListener, ICallBack {
+public class SelectStageScreen implements Screen, ICallBack {
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
@@ -42,11 +43,14 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 	private Image infoImage; // 填坑用
 
 	InputMultiplexer multiplexer = new InputMultiplexer();
-
+	
 	//
 	float speedx;
 	float speedy;
 	private GestureDetector detector;
+	//计时器
+	float timer;
+	private Image testImage;
 
 	public SelectStageScreen(MainGame mainGame) {
 		this.game = mainGame;
@@ -67,10 +71,11 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 		}
 		// DELAY
 		try {
-			Thread.sleep(10);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		timer++;
 	}
 
 	@Override
@@ -83,26 +88,41 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 		// todo:bgimage增加手势监听的功能。
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
+		bgimage.addListener(new ActorGestureListener() {
+//			@Override
+//			public void fling (InputEvent event, float velocityX, float velocityY, int button) {
+//				speedx = velocityX / 100.0f;
+//				speedy = velocityY / 100.0f;
+//			}
+			public void pan (InputEvent event, float x, float y, float deltaX, float deltaY) {
+				moveCamera(deltaX, deltaY);
+			}
+		});
 		stage.addActor(bgimage);
+		
+		Texture tex1 = GlobalVal.manager.get("data/SelStageBtn.png",
+				Texture.class);
+		Texture tex2 = GlobalVal.manager.get("data/SelStageBtn2.png",
+				Texture.class);
+		TextureRegion region1 = new TextureRegion(tex1);
+		TextureRegion region2 = new TextureRegion(tex2);
 		for (int i = 0; i < GlobalVal.stagelist.length; i++) {
 			int x = GlobalVal.stagelist[i].x;
 			int y = GlobalVal.stagelist[i].y;
 			int no = GlobalVal.stagelist[i].stageno;
-			Texture tex1 = GlobalVal.manager.get("data/SelStageBtn.png",
-					Texture.class);
-			Texture tex2 = GlobalVal.manager.get("data/SelStageBtn2.png",
-					Texture.class);
-			TextureRegion region1 = new TextureRegion(tex1);
-			TextureRegion region2 = new TextureRegion(tex2);
 			SelStageButton temp = new SelStageButton(new TextureRegionDrawable(
 					region1), new TextureRegionDrawable(region1),
 					new TextureRegionDrawable(region2));
 			temp.setStageInfo(x, y, no, this);
 			stage.addActor(temp);
 		}
+		
+//		testImage = new Image(tex2);
+//		testImage.setPosition(100, 100);
+//		stage.addActor(testImage);
 
-		detector = new GestureDetector(this);
-		multiplexer.addProcessor(detector); // 设置手势监听
+//		detector = new GestureDetector(this);
+//		multiplexer.addProcessor(detector); // 设置手势监听
 		multiplexer.addProcessor(stage); // 设置点击监听
 		Gdx.input.setInputProcessor(multiplexer);
 
@@ -127,56 +147,6 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 
 	}
 
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		// TODO Auto-generated method stub
-
-		return false;
-	}
-
-	@Override
-	public boolean tap(float x, float y, int count, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean longPress(float x, float y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		speedx = velocityX / 100.0f;
-		speedy = velocityY / 100.0f;
-		return false;
-	}
-
-	@Override
-	public boolean panStop(float x, float y, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance) {
-		// TODO Auto-generated method stub
-
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
-			Vector2 pointer1, Vector2 pointer2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		moveCamera(deltaX, deltaY);
-		return false;
-	}
 
 	private void moveCamera(float deltaX, float deltaY) {
 		stage.getViewport().getCamera().position.x -= deltaX;
@@ -245,10 +215,8 @@ public class SelectStageScreen implements Screen, GestureListener, ICallBack {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-
 				dialog.remove(); // 干掉 这window
 				multiplexer.addProcessor(detector); // 设置手势监听
-
 				return false;
 			}
 		});

@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -99,7 +101,6 @@ public class SelectStageScreen implements Screen, ICallBack {
 			}
 		});
 		stage.addActor(bgimage);
-		
 		Texture tex1 = GlobalVal.manager.get("data/SelStageBtn.png",
 				Texture.class);
 		Texture tex2 = GlobalVal.manager.get("data/SelStageBtn2.png",
@@ -220,7 +221,7 @@ public class SelectStageScreen implements Screen, ICallBack {
 				return false;
 			}
 		});
-
+		//dialog 布局
 		dialog.add(lbl_Tilte).expand().top().padLeft(50);
 		dialog.row();
 		dialog.add(infoImage).padLeft(60);
@@ -229,6 +230,10 @@ public class SelectStageScreen implements Screen, ICallBack {
 		dialog.add(btn_Cancel).padLeft(0);// 添加Cancel按钮
 		dialog.pack();
 		stage.addActor(dialog);
+		//dialog action
+		dialog.setHeight(0);
+		dialog.setX(x+height/2);
+		dialog.addAction(Actions.parallel(Actions.scaleTo(width, height, 1),Actions.moveTo(x, y, 1)));
 		multiplexer.removeProcessor(detector);
 	}
 }

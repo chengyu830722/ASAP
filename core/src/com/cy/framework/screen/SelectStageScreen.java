@@ -29,10 +29,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cy.framework.GlobalVal;
 import com.cy.framework.MainGame;
-
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class SelectStageScreen implements Screen, ICallBack {
 	private MainGame game;
 	private Stage stage;
@@ -73,7 +74,7 @@ public class SelectStageScreen implements Screen, ICallBack {
 		}
 		// DELAY
 		try {
-			Thread.sleep(100);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -87,19 +88,20 @@ public class SelectStageScreen implements Screen, ICallBack {
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(480, 800));
-		// todo:bgimage增加手势监听的功能。
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
-		bgimage.addListener(new ActorGestureListener() {
+		// bgimage增加手势监听的功能。-- 移动camera会造成抖动。
+//		bgimage.addListener(new ActorGestureListener() {
 //			@Override
 //			public void fling (InputEvent event, float velocityX, float velocityY, int button) {
 //				speedx = velocityX / 100.0f;
 //				speedy = velocityY / 100.0f;
 //			}
-			public void pan (InputEvent event, float x, float y, float deltaX, float deltaY) {
-				moveCamera(deltaX, deltaY);
-			}
-		});
+//			public void pan (InputEvent event, float x, float y, float deltaX, float deltaY) {
+//				moveCamera(deltaX, deltaY);
+//			}
+//		});
+		
 		stage.addActor(bgimage);
 		Texture tex1 = GlobalVal.manager.get("data/SelStageBtn.png",
 				Texture.class);
@@ -229,11 +231,15 @@ public class SelectStageScreen implements Screen, ICallBack {
 		dialog.add(btn_OK).padLeft(0); // 添加OK 按钮
 		dialog.add(btn_Cancel).padLeft(0);// 添加Cancel按钮
 		dialog.pack();
+		//dialog 增加action
+		dialog.setY(y+height/2);
+		dialog.setScaleY(0);
+		//action的持续时间
+		float duration=0.2f;
+		//可以增加差值算法，使ACTION更生动
+		Interpolation alpha=Interpolation.bounceOut;
+		dialog.addAction(parallel(scaleTo(1, 1, duration,alpha),moveTo(x, y, duration,alpha)));
 		stage.addActor(dialog);
-		//dialog action
-		dialog.setHeight(0);
-		dialog.setX(x+height/2);
-		dialog.addAction(Actions.parallel(Actions.scaleTo(width, height, 1),Actions.moveTo(x, y, 1)));
 		multiplexer.removeProcessor(detector);
 	}
 }

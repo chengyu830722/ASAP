@@ -6,8 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -28,13 +30,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.cy.framework.ActorAnimation;
 import com.cy.framework.GlobalVal;
 import com.cy.framework.MainGame;
+import com.esotericsoftware.tablelayout.BaseTableLayout.Debug;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-public class SelectStageScreen implements Screen, ICallBack {
+public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
@@ -43,7 +49,14 @@ public class SelectStageScreen implements Screen, ICallBack {
 	private Button btn_OK; // 对话框 确定按钮
 	private Button btn_Cancel; // 对话框 确定按钮
 	private Label lbl_Tilte; // 关卡介绍 标题
-	private Image infoImage; // 填坑用
+	private ActorAnimation actorAnimation; // 填坑用
+	
+	
+	
+
+	    
+	    
+	
 
 	InputMultiplexer multiplexer = new InputMultiplexer();
 	
@@ -53,8 +66,6 @@ public class SelectStageScreen implements Screen, ICallBack {
 	private GestureDetector detector;
 	//计时器
 	float timer;
-	private Image testImage;
-
 	public SelectStageScreen(MainGame mainGame) {
 		this.game = mainGame;
 	}
@@ -64,6 +75,11 @@ public class SelectStageScreen implements Screen, ICallBack {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
 		stage.draw();
+		
+		
+
+	       
+	        
 		// 惯性
 		if (!Gdx.input.isTouched()) {
 			if ((Math.abs(speedx) > 0.001f) || (Math.abs(speedy) > 0.001f)) {
@@ -119,13 +135,14 @@ public class SelectStageScreen implements Screen, ICallBack {
 			temp.setStageInfo(x, y, no, this);
 			stage.addActor(temp);
 		}
-		
-//		testImage = new Image(tex2);
-//		testImage.setPosition(100, 100);
-//		stage.addActor(testImage);
 
-//		detector = new GestureDetector(this);
-//		multiplexer.addProcessor(detector); // 设置手势监听
+		
+   
+	        
+	        
+	        
+		detector = new GestureDetector(this);
+		multiplexer.addProcessor(detector); // 设置手势监听
 		multiplexer.addProcessor(stage); // 设置点击监听
 		Gdx.input.setInputProcessor(multiplexer);
 
@@ -150,7 +167,7 @@ public class SelectStageScreen implements Screen, ICallBack {
 
 	}
 
-
+    
 	private void moveCamera(float deltaX, float deltaY) {
 		stage.getViewport().getCamera().position.x -= deltaX;
 		stage.getViewport().getCamera().position.y += deltaY;
@@ -171,6 +188,7 @@ public class SelectStageScreen implements Screen, ICallBack {
 	@Override
 	// 实现选关方法回调
 	public void doSelectStage(String StageNo) {
+		
 		BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt",
 				BitmapFont.class);
 		TextureRegion txr = new TextureRegion(GlobalVal.manager.get(
@@ -194,11 +212,11 @@ public class SelectStageScreen implements Screen, ICallBack {
 		float y = camerapos.y - height / 2;
 		dialog.setPosition(x, y);
 
-		// dialog.setModal(true);
+		// dialog.setModal(true);  如果监听设置到 stage 上 setModal方法可用
 		// 一个图片 一段文字
 		lbl_Tilte = new Label("你选择了第" + StageNo + "关", new LabelStyle(
 				bitmapFont, Color.RED));
-		infoImage = new Image(new Texture(Gdx.files.internal("badlogic.jpg")));
+		actorAnimation = new ActorAnimation();
 		Texture texOK = GlobalVal.manager.get("data/OK.png", Texture.class);
 		Texture texCancel = GlobalVal.manager.get("data/Cancel.png",
 				Texture.class);
@@ -224,13 +242,25 @@ public class SelectStageScreen implements Screen, ICallBack {
 			}
 		});
 		//dialog 布局
-		dialog.add(lbl_Tilte).expand().top().padLeft(50);
-		dialog.row();
-		dialog.add(infoImage).padLeft(60);
-		dialog.row();
-		dialog.add(btn_OK).padLeft(0); // 添加OK 按钮
-		dialog.add(btn_Cancel).padLeft(0);// 添加Cancel按钮
-		dialog.pack();
+		
+		Table table = new Table();
+		
+		float celWidth = width;
+		float celHeight = height;
+		table.setWidth(celWidth) ;
+		table.setHeight( celHeight);
+	
+    	table.defaults().space(5).align(Align.center).pad(5);
+		table.add(lbl_Tilte);
+		table.row();
+		table.add(actorAnimation).height(200).width(200).center();
+		table.row();
+		table.add(btn_OK); // 添加OK 按钮
+		table.add(btn_Cancel);// 添加Cancel按钮
+		
+		dialog.add(table);
+		
+	
 		//dialog 增加action
 		dialog.setY(y+height/2);
 		dialog.setScaleY(0);
@@ -239,7 +269,63 @@ public class SelectStageScreen implements Screen, ICallBack {
 		//可以增加差值算法，使ACTION更生动
 		Interpolation alpha=Interpolation.bounceOut;
 		dialog.addAction(parallel(scaleTo(1, 1, duration,alpha),moveTo(x, y, duration,alpha)));
+		
 		stage.addActor(dialog);
 		multiplexer.removeProcessor(detector);
 	}
+
+	
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+		speedx = velocityX / 100.0f;
+		speedy = velocityY / 100.0f;
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		// TODO Auto-generated method stub
+		moveCamera(deltaX, deltaY);
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
+			Vector2 pointer1, Vector2 pointer2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
 }

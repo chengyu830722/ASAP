@@ -46,13 +46,14 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 	private ActorAnimation actorAnimation; // 填坑用
 
 	InputMultiplexer multiplexer = new InputMultiplexer();
-	
+
 	//
 	float speedx;
 	float speedy;
 	private GestureDetector detector;
-	//计时器
+	// 计时器
 	float timer;
+
 	public SelectStageScreen(MainGame mainGame) {
 		this.game = mainGame;
 	}
@@ -62,11 +63,8 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
 		stage.draw();
-		
-		
+		Table.drawDebug(stage);
 
-	       
-	        
 		// 惯性
 		if (!Gdx.input.isTouched()) {
 			if ((Math.abs(speedx) > 0.001f) || (Math.abs(speedy) > 0.001f)) {
@@ -94,17 +92,19 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 		bgimage = new Image(GlobalVal.manager.get("data/SelStageBG.png",
 				Texture.class));
 		// bgimage增加手势监听的功能。-- 移动camera会造成抖动。
-//		bgimage.addListener(new ActorGestureListener() {
-//			@Override
-//			public void fling (InputEvent event, float velocityX, float velocityY, int button) {
-//				speedx = velocityX / 100.0f;
-//				speedy = velocityY / 100.0f;
-//			}
-//			public void pan (InputEvent event, float x, float y, float deltaX, float deltaY) {
-//				moveCamera(deltaX, deltaY);
-//			}
-//		});
-		
+		// bgimage.addListener(new ActorGestureListener() {
+		// @Override
+		// public void fling (InputEvent event, float velocityX, float
+		// velocityY, int button) {
+		// speedx = velocityX / 100.0f;
+		// speedy = velocityY / 100.0f;
+		// }
+		// public void pan (InputEvent event, float x, float y, float deltaX,
+		// float deltaY) {
+		// moveCamera(deltaX, deltaY);
+		// }
+		// });
+
 		stage.addActor(bgimage);
 		Texture tex1 = GlobalVal.manager.get("data/SelStageBtn.png",
 				Texture.class);
@@ -128,10 +128,12 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
+
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		return false;
 	}
+
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
 		return false;
@@ -171,7 +173,6 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 		return false;
 	}
 
-    
 	private void moveCamera(float deltaX, float deltaY) {
 		stage.getViewport().getCamera().position.x -= deltaX;
 		stage.getViewport().getCamera().position.y += deltaY;
@@ -192,7 +193,7 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 	@Override
 	// 实现选关方法回调
 	public void doSelectStage(String StageNo) {
-		
+
 		BitmapFont bitmapFont = GlobalVal.manager.get("font/chn.fnt",
 				BitmapFont.class);
 		TextureRegion txr = new TextureRegion(GlobalVal.manager.get(
@@ -206,7 +207,7 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 
 		float width = 400;
 		float height = 350;
-		// 设置位置 
+		// 设置位置
 		dialog.setWidth(width);
 		dialog.setHeight(height);
 		dialog.setKeepWithinStage(false);
@@ -216,7 +217,7 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 		float y = camerapos.y - height / 2;
 		dialog.setPosition(x, y);
 
-		// dialog.setModal(true);  如果监听设置到 stage 上 setModal方法可用
+		// dialog.setModal(true); 如果监听设置到 stage 上 setModal方法可用
 		// 一个图片 一段文字
 		lbl_Tilte = new Label("你选择了第" + StageNo + "关", new LabelStyle(
 				bitmapFont, Color.RED));
@@ -245,59 +246,61 @@ public class SelectStageScreen implements GestureListener, Screen, ICallBack {
 				return false;
 			}
 		});
-		//dialog 布局
-		
+		// dialog 布局
+
 		Table table = new Table();
-		
+
 		float celWidth = width;
 		float celHeight = height;
-		table.setWidth(celWidth) ;
-		table.setHeight( celHeight);
-	
-    	table.defaults().space(5).align(Align.center).pad(5);
+		table.setWidth(celWidth);
+		table.setHeight(celHeight);
+
+		table.defaults().space(5).align(Align.center).pad(5);
 		table.add(lbl_Tilte);
 		table.row();
 		table.add(actorAnimation).height(200).width(200).center();
 		table.row();
 		table.add(btn_OK); // 添加OK 按钮
 		table.add(btn_Cancel);// 添加Cancel按钮
-		
+		table.debug();
 		dialog.add(table);
-		
-	
-		//dialog 增加action
-		dialog.setY(y+height/2);
+
+		// dialog 增加action
+		dialog.setY(y + height / 2);
 		dialog.setScaleY(0.5f);
-		//action的持续时间
-		float duration=0.2f;
-		//可以增加插值算法，使ACTION更生动
-		Interpolation alpha=Interpolation.bounceOut;
-		dialog.addAction(parallel(scaleTo(1, 1, duration,alpha),moveTo(x, y, duration,alpha)));
-		
+		// action的持续时间
+		float duration = 0.2f;
+		// 可以增加插值算法，使ACTION更生动
+		Interpolation alpha = Interpolation.bounceOut;
+		dialog.addAction(parallel(scaleTo(1, 1, duration, alpha),
+				moveTo(x, y, duration, alpha)));
+
 		stage.addActor(dialog);
 		multiplexer.removeProcessor(detector);
+
 	}
+
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

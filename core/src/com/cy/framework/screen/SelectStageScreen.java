@@ -7,34 +7,26 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.cy.framework.GlobalVal;
 import com.cy.framework.MainGame;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-public class SelectStageScreen implements Screen, ICallBack {
+public class SelectStageScreen implements Screen, GestureListener,  ICallBack {
 	private MainGame game;
 	private Stage stage;
 	private Image bgimage;
@@ -124,30 +116,53 @@ public class SelectStageScreen implements Screen, ICallBack {
 //		testImage.setPosition(100, 100);
 //		stage.addActor(testImage);
 
-//		detector = new GestureDetector(this);
-//		multiplexer.addProcessor(detector); // 设置手势监听
-		multiplexer.addProcessor(stage); // 设置点击监听
+		detector = new GestureDetector(this);
+		multiplexer.addProcessor(detector); 
+		multiplexer.addProcessor(stage); 
 		Gdx.input.setInputProcessor(multiplexer);
 
 	}
-
 	@Override
-	public void hide() {
-		this.dispose();
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		return false;
+	}
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		return false;
 	}
 
 	@Override
-	public void pause() {
+	public boolean longPress(float x, float y) {
+		return false;
 	}
 
 	@Override
-	public void resume() {
+	public boolean fling(float velocityX, float velocityY, int button) {
+		speedx = velocityX / 100.0f;
+		speedy = velocityY / 100.0f;
+		return false;
 	}
 
 	@Override
-	public void dispose() {
-		stage.dispose();
+	public boolean panStop(float x, float y, int pointer, int button) {
+		return false;
+	}
 
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
+			Vector2 pointer1, Vector2 pointer2) {
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		moveCamera(deltaX, deltaY);
+		return false;
 	}
 
 
@@ -184,7 +199,7 @@ public class SelectStageScreen implements Screen, ICallBack {
 
 		float width = 400;
 		float height = 350;
-		// todo:设置位置 √
+		// 设置位置 
 		dialog.setWidth(width);
 		dialog.setHeight(height);
 		dialog.setKeepWithinStage(false);
@@ -233,13 +248,37 @@ public class SelectStageScreen implements Screen, ICallBack {
 		dialog.pack();
 		//dialog 增加action
 		dialog.setY(y+height/2);
-		dialog.setScaleY(0);
+		dialog.setScaleY(0.5f);
 		//action的持续时间
 		float duration=0.2f;
-		//可以增加差值算法，使ACTION更生动
+		//可以增加插值算法，使ACTION更生动
 		Interpolation alpha=Interpolation.bounceOut;
 		dialog.addAction(parallel(scaleTo(1, 1, duration,alpha),moveTo(x, y, duration,alpha)));
 		stage.addActor(dialog);
 		multiplexer.removeProcessor(detector);
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 }

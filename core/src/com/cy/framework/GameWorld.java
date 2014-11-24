@@ -17,7 +17,6 @@ import com.cy.asap.Enemy;
 import com.cy.asap.EnergyBall;
 import com.cy.asap.Hero;
 import com.cy.asap.Rock;
-import com.cy.framework.MyHub.HubStatus;
 
 public class GameWorld {
 	// 主人公
@@ -44,7 +43,7 @@ public class GameWorld {
     MyWorldScript script;
     public Hero hero;
     //hub
-    public MyHub hub;
+    public MyHud hub;
     
 	public GameWorld(MainGame mainGame) {
 		this.mainGame = mainGame;
@@ -76,7 +75,7 @@ public class GameWorld {
 		//开始脚本
 		script.beginscript("stage1.xml");
 		//初始化HUB
-		hub=new MyHub();
+		hub=new MyHud();
 	}
 
 	public void render1f() {

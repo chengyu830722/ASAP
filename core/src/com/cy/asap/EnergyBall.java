@@ -1,6 +1,5 @@
 package com.cy.asap;
 
-import java.lang.ref.PhantomReference;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
